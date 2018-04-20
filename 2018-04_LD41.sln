@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JamTemplate", "Code\JamTemplate.csproj", "{C9FA175F-8215-421A-9909-18C280B99837}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JamUtilities", "Lib\JamUtilities\JamUtilities\JamUtilities.csproj", "{FC7A5984-9B7D-494C-A49D-059DCABFB253}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFMLCollision", "Lib\SFMLCollision\SFMLCollision\SFMLCollision.csproj", "{158E487D-E39A-4F04-96CF-729A2D6E3C12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9FA175F-8215-421A-9909-18C280B99837}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C9FA175F-8215-421A-9909-18C280B99837}.Debug|x86.ActiveCfg = Debug|x86
+		{C9FA175F-8215-421A-9909-18C280B99837}.Debug|x86.Build.0 = Debug|x86
+		{C9FA175F-8215-421A-9909-18C280B99837}.Release|Any CPU.ActiveCfg = Release|x86
+		{C9FA175F-8215-421A-9909-18C280B99837}.Release|x86.ActiveCfg = Release|x86
+		{C9FA175F-8215-421A-9909-18C280B99837}.Release|x86.Build.0 = Release|x86
+		{FC7A5984-9B7D-494C-A49D-059DCABFB253}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FC7A5984-9B7D-494C-A49D-059DCABFB253}.Debug|x86.ActiveCfg = Debug|x86
+		{FC7A5984-9B7D-494C-A49D-059DCABFB253}.Debug|x86.Build.0 = Debug|x86
+		{FC7A5984-9B7D-494C-A49D-059DCABFB253}.Release|Any CPU.ActiveCfg = Release|x86
+		{FC7A5984-9B7D-494C-A49D-059DCABFB253}.Release|x86.ActiveCfg = Release|x86
+		{FC7A5984-9B7D-494C-A49D-059DCABFB253}.Release|x86.Build.0 = Release|x86
+		{158E487D-E39A-4F04-96CF-729A2D6E3C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{158E487D-E39A-4F04-96CF-729A2D6E3C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{158E487D-E39A-4F04-96CF-729A2D6E3C12}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{158E487D-E39A-4F04-96CF-729A2D6E3C12}.Debug|x86.Build.0 = Debug|Any CPU
+		{158E487D-E39A-4F04-96CF-729A2D6E3C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{158E487D-E39A-4F04-96CF-729A2D6E3C12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{158E487D-E39A-4F04-96CF-729A2D6E3C12}.Release|x86.ActiveCfg = Release|Any CPU
+		{158E487D-E39A-4F04-96CF-729A2D6E3C12}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
