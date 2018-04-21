@@ -119,9 +119,9 @@ namespace JamTemplate
             rw.Draw(_background);
             _state.Draw(rw);
 
-
-            _state.DrawOverlay(rw);
             ScreenEffects.GetStaticEffect("vignette").Draw(rw);
+            _state.DrawOverlay(rw);
+            
         }
 
 

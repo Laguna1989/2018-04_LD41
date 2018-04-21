@@ -17,6 +17,8 @@ namespace JamTemplate
         public ShotGroup allShots;
         public float spawnDeadTime = 0;
 
+        private Animation coin;
+
         public int wave = 1;
 
         public int health = 10;
@@ -57,6 +59,12 @@ namespace JamTemplate
             
 
             allShots = new ShotGroup();
+       
+            coin = new Animation("../GFX/coin.png", new Vector2u(16, 16));
+            coin.SetPosition(new Vector2f(4, 12));
+            coin.SetScale(0.75f, 0.75f);
+            coin.Add("idle", new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }), 0.125f);
+            coin.Play("idle");
             Add(allShots);
         }
 
@@ -69,7 +77,6 @@ namespace JamTemplate
         public override void Draw(RenderWindow rw)
         {
             base.Draw(rw);
-            //rw.Draw(test);
             
             foreach(Tower.Tower t in allTowers)
             {
@@ -80,15 +87,18 @@ namespace JamTemplate
         public override void DrawOverlay(RenderWindow rw)
         {
             base.DrawOverlay(rw);
-            SmartText.DrawText("Gold: " + Resources.money, new Vector2f(10, 4), rw);
+            coin.Draw(rw);
+            SmartText.DrawText("  " + Resources.money, new Vector2f(10, 0), rw);
             SmartText.DrawText("Lives: " + this.health , new Vector2f(10, 30), rw);
         }
 
-        public override void Update(TimeObject timeObject)
+        public override void Update(TimeObject to)
         {
-            base.Update(timeObject);
-            spawnDeadTime -= timeObject.ElapsedGameTime;
-            //T.Trace(allEnemies.Count.ToString());
+            base.Update(to);
+            spawnDeadTime -= to.ElapsedGameTime;
+
+            coin.Update(to);
+
             if (Input.justPressed[Keyboard.Key.N])
             {
                 
