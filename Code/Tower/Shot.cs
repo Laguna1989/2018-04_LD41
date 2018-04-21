@@ -24,7 +24,7 @@ namespace JamTemplate.Tower
             else
                 Play("1");
 
-            dmg = GP.ShotDamageBase * (float)(Math.Pow((t.level +1), 0.75f));
+            dmg = GP.ShotDamageBase * (float)(Math.Pow((t.levelDamage +1), 0.85f));
 
 
             

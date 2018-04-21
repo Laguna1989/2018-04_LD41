@@ -15,16 +15,27 @@ namespace JamTemplate.Tower
 
         private StateTower state;
 
-        public bool showMenu = false;
+        
 
-        public int level = 0;
+        public int level = 1;
+
+        public int levelDamage = 1;
+        public int levelRange = 1;
+        public int levelRate = 1;
 
         public Enemy target = null;
         public float shootTimer = 0;
-        private float range = 100;
+        private float range = GP.WorldTileSizeInPixel * 2;
 
         private Shape MenuBG;
+        public bool showMenu = false;
+        public TextButton tbDamage;
+        public TextButton tbRange;
+        public TextButton tbRate;
 
+        private long costDamage = 2; 
+        private long costRate = 2;
+        private long costRange = 2;
 
         public Tower (int x, int y, StateTower s) : base ("../GFX/tower.png")
         {
@@ -32,7 +43,38 @@ namespace JamTemplate.Tower
             tx = x;
             ty = y;
             ReloadSprite();
-            MenuBG = new RectangleShape(new Vector2f(100, 100));
+            MenuBG = new RectangleShape(new Vector2f(200, 100));
+            tbDamage = new TextButton("damage",LevelUpDmg);
+            tbRange = new TextButton("range", LevelUpRange);
+            tbRate = new TextButton("rate", LevelUpRate);
+        }
+
+        private void LevelUpDmg()
+        {
+            this.Flash(Color.Green, 0.25f);
+            T.TraceD("level up DMG");
+            Resources.money -= costDamage;
+            levelDamage++;
+            costDamage = (long)(2 * Math.Pow(levelDamage, 1.1));
+        }
+
+        private void LevelUpRange()
+        {
+            this.Flash(Color.Green, 0.25f);
+            T.TraceD("level up rng");
+            Resources.money -= costRange;
+            levelRange++;
+            range = GP.WorldTileSizeInPixel * (2 + 0.5f * levelRange);
+            costRange = (long)(2 * Math.Pow(levelRange, 1.1));
+        }
+
+        private void LevelUpRate()
+        {
+            this.Flash(Color.Green, 0.25f);
+            T.TraceD("level up rt");
+            Resources.money -= costRate;
+            levelRate++;
+            costRate = (long)(2 * Math.Pow(levelRate, 1.1));
         }
 
         private void ReloadSprite()
@@ -48,9 +90,25 @@ namespace JamTemplate.Tower
         {
             base.Update(to);
             handleShooting(to.ElapsedGameTime);
+            UpdateMenu(to);
+        }
+
+        private void UpdateMenu(TimeObject to)
+        {
+            tbDamage.Update(to);
+            tbRange.Update(to);
+            tbRate.Update(to);
 
             MenuBG.Position = this.Position + new Vector2f(this.Sprite.GetLocalBounds().Width, this.Sprite.GetLocalBounds().Height)
                 + new Vector2f(32, -32);
+
+            tbDamage.active = Resources.money >= costDamage;
+            tbRange.active = Resources.money >= costRange;
+            tbRate.active = Resources.money >= costRate;
+
+            tbDamage.SetPosition(new Vector2f(MenuBG.Position.X + 4, MenuBG.Position.Y + 4));
+            tbRange.SetPosition(new Vector2f(MenuBG.Position.X + 4, MenuBG.Position.Y + 4 + 48));
+            tbRate.SetPosition(new Vector2f(MenuBG.Position.X + 4, MenuBG.Position.Y + 4 + 48 + 48));
         }
 
         private void handleShooting(float elapsed)
@@ -63,7 +121,7 @@ namespace JamTemplate.Tower
 
                 if (target != null && !target.IsDead())
                 {
-                    shootTimer = GP.TowerReloadTime;
+                    shootTimer = GP.TowerReloadTime * (0.25f + 0.75f * (float)Math.Pow(levelRate, -0.8));
                     Shot s = new Shot(this, target);
                     state.SpawnShot(s);
                 }
@@ -81,12 +139,16 @@ namespace JamTemplate.Tower
             if (showMenu)
             {
                 rw.Draw(MenuBG);
+                tbDamage.Draw(rw);
+                tbRange.Draw(rw);
+                tbRate.Draw(rw);
             }
         }
 
         private Enemy getClosestTarget()
         {
             Enemy en = null;
+
             float d = range;
             foreach(Enemy e in state.allEnemies)
             {
@@ -120,7 +182,15 @@ namespace JamTemplate.Tower
                     level++;
                 }
             }
-            
+
+
+
+            if (showMenu)
+            {
+                tbDamage.GetInput();
+                tbRange.GetInput();
+                tbRate.GetInput();
+            }
         }
 
         

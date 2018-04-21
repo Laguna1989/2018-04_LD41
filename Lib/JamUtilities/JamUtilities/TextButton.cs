@@ -7,7 +7,7 @@ using SFML.Window;
 
 namespace JamUtilities
 {
-    class TextButton : IGameObject
+    public class TextButton : IGameObject
     {
         private Sprite sprNormal;
         private Sprite sprOver;
@@ -19,18 +19,27 @@ namespace JamUtilities
 
         public bool active = true;
 
+        public Action PressCallback = null;
+
+        public TextButton(String t, Action cb)
+        {
+            text = t;
+            PressCallback = cb;
+            sprNormal = new Sprite(TextureManager.GetTextureFromFileName("../GFX/btn_normal.png"));
+            sprOver = new Sprite(TextureManager.GetTextureFromFileName("../GFX/btn_over.png"));
+            sprPressed = new Sprite(TextureManager.GetTextureFromFileName("../GFX/btn_down.png"));
+            sprNormal.Scale = sprOver.Scale = sprPressed.Scale = new Vector2f(2, 2);
+        }
+
         public void Draw(RenderWindow rw)
         {
-            if (active)
-            {
-                if (mode == 0)
-                    rw.Draw(sprNormal);
-                else if (mode == 1)
-                    rw.Draw(sprOver);
-                else
-                    rw.Draw(sprPressed);
-                SmartText.DrawText(text, new Vector2f(sprNormal.Position.X + 5, sprNormal.Position.Y + 5), rw);
-            }
+            if (mode == 0)
+                rw.Draw(sprNormal);
+            else if (mode == 1)
+                rw.Draw(sprOver);
+            else
+                rw.Draw(sprPressed);
+            SmartText.DrawText(text, new Vector2f(sprNormal.Position.X + 5, sprNormal.Position.Y + 5), rw);
         }
 
         public void GetInput()
@@ -46,7 +55,17 @@ namespace JamUtilities
                         mode = 2;
                     }
                 }
-            }      
+                if (mode == 1 && Mouse.justReleased)
+                {
+                    if (PressCallback != null)
+                        PressCallback();                    
+                }
+                
+            }
+            else
+            {
+                mode = 1;
+            }
         }
 
         public bool containsPoint(Vector2f p)
@@ -75,7 +94,7 @@ namespace JamUtilities
 
         public void Update(TimeObject to)
         {
-
+            sprNormal.Color = sprOver.Color = sprPressed.Color = ((active)? Color.White: new Color(100,100,100));
             return;
         }
     }

@@ -63,6 +63,7 @@ namespace JamTemplate
         public void EnemyDead(Enemy e)
         {
             T.TraceD("i love it when a plan comes together");
+            Resources.money += 2;
         }
 
         public override void Draw(RenderWindow rw)
