@@ -11,7 +11,7 @@ namespace JamUtilities
     {
         Sprite layer1;
         Sprite layer2;
-        Sprite layer3;
+        //Sprite layer3;
 
         Vector2f velocity = new Vector2f(-20, -25);
 
@@ -19,16 +19,16 @@ namespace JamUtilities
         {
             layer1 = new Sprite(TextureManager.GetTextureFromFileName("../GFX/clouds1.png"));
             layer2 = new Sprite(TextureManager.GetTextureFromFileName("../GFX/clouds2.png"));
-            layer3 = new Sprite(TextureManager.GetTextureFromFileName("../GFX/clouds3.png"));
+            //layer3 = new Sprite(TextureManager.GetTextureFromFileName("../GFX/clouds3.png"));
 
             layer1.Scale = new Vector2f(3, 3);
             layer2.Scale = new Vector2f(3, 3);
-            layer3.Scale = new Vector2f(3, 3);
+            //layer3.Scale = new Vector2f(3, 3);
 
 
-            layer1.Color = new Color(255, 255, 255, 15);
-            layer2.Color = new Color(255, 255, 255, 15);
-            layer3.Color = new Color(255, 255, 255, 15);
+            layer1.Color = new Color(255, 255, 255, 20);
+            layer2.Color = new Color(255, 255, 255, 20);
+            //layer3.Color = new Color(255, 255, 255, 20);
         }
 
         public bool IsDead()
@@ -46,11 +46,11 @@ namespace JamUtilities
             float dt = to.ElapsedGameTime;
             layer1.Position = new Vector2f(layer1.Position.X + velocity.X * dt, layer1.Position.Y + velocity.Y * dt);
             layer2.Position = new Vector2f(layer2.Position.X + velocity.X * dt* 2, layer2.Position.Y + velocity.Y * dt * 2);
-            layer3.Position = new Vector2f(layer3.Position.X + velocity.X * dt * 3, layer3.Position.Y + velocity.Y * dt * 3);
+            //layer3.Position = new Vector2f(layer3.Position.X + velocity.X * dt * 3, layer3.Position.Y + velocity.Y * dt * 3);
 
             WarpImage(layer1);
             WarpImage(layer2);
-            WarpImage(layer3);
+            //WarpImage(layer3);
 
         }
 
@@ -66,7 +66,7 @@ namespace JamUtilities
         {
             rw.Draw(layer1);
             rw.Draw(layer2);
-            rw.Draw(layer3);
+            //rw.Draw(layer3);
         }
 
         public Vector2f GetPosition()

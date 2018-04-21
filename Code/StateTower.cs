@@ -49,11 +49,8 @@ namespace JamTemplate
             Add(allEnemies);
 
 
-            
-            castle = new Animation("../GFX/castle.png", new Vector2u(144, 96));
-            castle.Add("idle", new List<int>(new int[] { 0 }), 1);
-            castle.Play("idle");
-            castle.SetPosition(new Vector2f(490, 310));
+
+            castle = new Castle();
             Add(castle);
 
             
