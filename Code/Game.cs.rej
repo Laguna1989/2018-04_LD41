@@ -1,0 +1,9 @@
+diff a/Code/Game.cs b/Code/Game.cs	(rejected hunks)
+@@ -119,6 +119,7 @@
+             if (gs == null)
+                 throw new ArgumentNullException("gs","cannot switch to a gamestate which is null!");
+ 
++            Input.Update();
+             Game._state = gs;
+             Game._state.Init();
+         }
