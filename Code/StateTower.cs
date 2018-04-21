@@ -64,15 +64,16 @@ namespace JamTemplate
             coin.Add("idle", new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }), 0.125f);
             coin.Play("idle");
 
-
+#if !DEBUG
             cl = new CloudLayer();
-
+#endif
         }
 
         public void EnemyDead(Enemy e)
         {
             T.TraceD("i love it when a plan comes together");
             Resources.money += 1;
+
         }
 
         public override void Draw(RenderWindow rw)
@@ -88,7 +89,9 @@ namespace JamTemplate
         public override void DrawOverlay(RenderWindow rw)
         {
             base.DrawOverlay(rw);
+#if !DEBUG
             cl.Draw(rw);
+#endif
             coin.Draw(rw);
             SmartText.DrawText("  " + Resources.money, new Vector2f(10, 0), rw);
             SmartText.DrawText("Lives: " + this.health , new Vector2f(10, 30), rw);
@@ -99,7 +102,10 @@ namespace JamTemplate
             base.Update(to);
             spawnDeadTime -= to.ElapsedGameTime;
 
+#if !DEBUG
             cl.Update(to);
+#endif
+
             coin.Update(to);
 
             if (Input.justPressed[Keyboard.Key.N])
@@ -121,8 +127,39 @@ namespace JamTemplate
 
                     if (SFMLCollision.Collision.BoundingBoxTest(s._sprites[0].Sprite, e._sprites[0].Sprite))
                     {
+
                         e.hit(s.dmg);
                         s.hit();
+
+                        // check for crit
+                        {
+                            float rng = (float)(RandomGenerator.Random.NextDouble());
+                            if (rng <= ResearchManager.CritChance / 100.0f)
+                            {
+                                T.Trace("crit");
+                                e.hit(s.dmg + ResearchManager.CritFactor);
+                            }
+                        }
+                        // check for freeze
+                        {
+                            float rng = (float)(RandomGenerator.Random.NextDouble());
+                            if (rng <= ResearchManager.FreezeChance/ 100.0f)
+                            {
+                                T.Trace("freeze");
+                                //e.hit(s.dmg + ResearchManager.CritFactor);
+                                e.Freeze(ResearchManager.FreezeDuration);
+                            }
+                        }
+
+                        // check for goldDrop
+                        {
+                            float rng = (float)(RandomGenerator.Random.NextDouble());
+                            if (rng <= ResearchManager.GoldChance / 100.0f)
+                            {
+                                T.Trace("gold");
+                                Resources.money++;
+                            }
+                        }
 
                     }
                 }
@@ -141,6 +178,9 @@ namespace JamTemplate
         {
             if (spawnDeadTime <= 0)
             {
+                //Enemy e = new Enemy(m.allPaths[0], this,  0.85f);
+                //allEnemies.Add(e);
+
                 spawnDeadTime = 1.0f;
                 int count = 3 + 5 * wave;
 
@@ -154,7 +194,7 @@ namespace JamTemplate
                 {
                     int idx = RandomGenerator.Int(0, m.allPaths.Count);
 
-                    Enemy e = new Enemy(m.allPaths[idx], this,  1.5f + pathcounter[idx] * 0.85f);
+                    Enemy e = new Enemy(m.allPaths[idx], this, 1.5f + pathcounter[idx] * 0.85f);
                     allEnemies.Add(e);
                     pathcounter[idx]++;
                 }

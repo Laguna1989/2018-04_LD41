@@ -20,6 +20,9 @@ namespace JamTemplate.Tower
         private float startDelay = 0;
         private StateTower state;
 
+        private float freezeTimer = 0;
+        private Vector2f oldVelocity = new Vector2f(0, 0);
+
         public Enemy (Path pa, StateTower  s, float delay = 0) : base("../GFX/enemy.png", new Vector2u(16,16))
         {
             p = pa;
@@ -41,12 +44,39 @@ namespace JamTemplate.Tower
 
         public override void Update(TimeObject to)
         {
+
+
             base.Update(to);
             startDelay -= to.ElapsedGameTime;
-
+            
             if (startDelay <= 0)
             {
-                moveTimer -= to.ElapsedGameTime;
+
+                if (freezeTimer > 0)
+                {
+                    // in freeze mode
+                    moveTimer -= 0;
+                    velocity = new Vector2f(0, 0);
+                    freezeTimer -= to.ElapsedGameTime;
+                    //T.TraceD(freezeTimer.ToString());
+                    if (freezeTimer <= 0)
+                    {
+                        T.TraceD("unfreeze");
+                        velocity = oldVelocity;
+                        foreach (SmartSprite spr in _sprites)
+                        {
+                            spr.Sprite.Color = Color.White;
+                        }
+                    }
+                }
+                else
+                {
+                    // not in freeze mode   
+                    moveTimer -= to.ElapsedGameTime;
+                    oldVelocity = velocity;
+                }
+
+                //moveTimer -= to.ElapsedGameTime * ((freezeTimer > 0) ? 0 : 1);
                 if (moveTimer <= 0)
                 {
                     moveTimer = GP.EnemyMoveTimerMax;
@@ -77,9 +107,17 @@ namespace JamTemplate.Tower
 
                 }
             }
-            //Position = new Vector2f(160, 32);
-            
 
+        }
+
+        public void Freeze (float duration)
+        {
+            if (duration > freezeTimer)
+                freezeTimer = duration;
+            foreach (SmartSprite spr in _sprites)
+            {
+                spr.Sprite.Color = Color.Blue;
+            }
         }
 
         private void SetWalkingAnimation(Path.Dir newdir)
@@ -111,6 +149,8 @@ namespace JamTemplate.Tower
             state.looseLife();
             alive = false;
         }
+
+        
 
         public void hit(float dmg)
         {

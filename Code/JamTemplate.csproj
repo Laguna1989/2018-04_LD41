@@ -66,6 +66,7 @@
     <Compile Include="Tower\EnemyGroup.cs" />
     <Compile Include="Tower\Map.cs" />
     <Compile Include="Tower\Path.cs" />
+    <Compile Include="Tower\ResearchManager.cs" />
     <Compile Include="Tower\Shot.cs" />
     <Compile Include="Tower\ShotGroup.cs" />
     <Compile Include="Tower\Tile.cs" />

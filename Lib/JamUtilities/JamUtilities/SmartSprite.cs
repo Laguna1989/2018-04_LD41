@@ -142,16 +142,16 @@ namespace JamUtilities
         public virtual void Update(TimeObject to)
         {
             
-
-            Vector2f newPos = GetPosition();
-            newPos += velocity * to.ElapsedGameTime;
-            SetPosition(newPos);
-
             Update(to.ElapsedGameTime);
         }
 
+
         public void Update(float deltaT)
         {
+            Vector2f newPos = GetPosition();
+            newPos += velocity * deltaT;
+            SetPosition(newPos);
+
             _flashOverlay.Scale = _scaleVector;
             _flashOverlay.Rotation = Rotation;
             _flashOverlay.Origin = Origin;
