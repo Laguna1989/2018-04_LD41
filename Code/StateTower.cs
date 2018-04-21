@@ -15,11 +15,15 @@ namespace JamTemplate
         public EnemyGroup allEnemies;
         public TowerGroup allTowers;
         public ShotGroup allShots;
+        public float spawnDeadTime = 0;
 
         public int wave = 1;
 
         public int health = 10;
 
+        private Animation castle;
+
+        
         public override void Init()
         {
             base.Init();
@@ -41,9 +45,16 @@ namespace JamTemplate
             
             allTowers.Add(new Tower.Tower(11, 13, this));
 
+            castle = new Animation("../GFX/castle.png", new Vector2u(144, 96));
+            castle.Add("idle", new List<int>(new int[] { 0 }), 1);
+            castle.Play("idle");
+            castle.SetPosition(new Vector2f(490, 310));
+            Add(castle);
+
+            
+
             allShots = new ShotGroup();
             Add(allShots);
-
         }
 
         public void EnemyDead(Enemy e)
@@ -54,15 +65,22 @@ namespace JamTemplate
         public override void Draw(RenderWindow rw)
         {
             base.Draw(rw);
+            //rw.Draw(test);
         
         }
 
         public override void Update(TimeObject timeObject)
         {
             base.Update(timeObject);
-
+            spawnDeadTime -= timeObject.ElapsedGameTime;
+            //T.Trace(allEnemies.Count.ToString());
             if (Input.justPressed[Keyboard.Key.N])
-                SpawnWave();
+            {
+                
+
+                    SpawnWave();
+            }
+                
 
             foreach(Shot s in allShots)
             {
@@ -92,23 +110,27 @@ namespace JamTemplate
 
         public void SpawnWave()
         {
-            int count = 3 + 5 * wave;
-
-            List<int> pathcounter = new List<int>();
-            for (int i = 0; i != m.allPaths.Count; ++i)
+            if (spawnDeadTime <= 0)
             {
-                pathcounter.Add(0);
-            }
+                spawnDeadTime = 1.0f;
+                int count = 3 + 5 * wave;
 
-            for(int i = 0; i != count; ++i)
-            {
-                int idx = RandomGenerator.Int(0, m.allPaths.Count);
-                
-                Enemy e = new Enemy(m.allPaths[idx], this, pathcounter[idx] * 0.85f);
-                allEnemies.Add(e);
-                pathcounter[idx]++;
+                List<int> pathcounter = new List<int>();
+                for (int i = 0; i != m.allPaths.Count; ++i)
+                {
+                    pathcounter.Add(0);
+                }
+
+                for (int i = 0; i != count; ++i)
+                {
+                    int idx = RandomGenerator.Int(0, m.allPaths.Count);
+
+                    Enemy e = new Enemy(m.allPaths[idx], this,  1.5f + pathcounter[idx] * 0.85f);
+                    allEnemies.Add(e);
+                    pathcounter[idx]++;
+                }
+                wave++;
             }
-            wave++;
         }
 
         public void SpawnShot(Shot s)
@@ -122,6 +144,9 @@ namespace JamTemplate
         public void looseLife ()
         {
             health--;
+            Color c = Color.Red;
+            c.A = 200;
+            castle.Flash(c, 0.75f);
         }
     }
 }

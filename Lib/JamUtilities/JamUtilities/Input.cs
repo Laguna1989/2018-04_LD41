@@ -54,11 +54,8 @@ namespace JamUtilities
             if (allKeys == null)
                 allKeys = new List<Keyboard.Key>(dict.Keys);
         }
-        public static void Reset (Dictionary<Keyboard.Key,bool> dict)
-        {
-            foreach(var kvp in dict)
-                dict[kvp.Key] = false;
-        }
+
+   
 
         
 

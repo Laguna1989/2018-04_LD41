@@ -154,6 +154,7 @@ namespace JamUtilities
             _flashOverlay.Rotation = Rotation;
             _flashOverlay.Origin = Origin;
             _flashOverlay.Position = Position;
+
             if (IsInFlash)
             {
                 _flashOverlay.TextureRect = _sprite.TextureRect;
@@ -356,7 +357,7 @@ namespace JamUtilities
 
         public bool alive = true;
 
-        protected Vector2f velocity = new Vector2f(0, 0);
+        public Vector2f velocity = new Vector2f(0, 0);
 
         #endregion FIELDS
     }

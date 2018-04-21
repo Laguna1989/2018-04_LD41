@@ -14,12 +14,9 @@ namespace JamTemplate.Tower
 
         private int pathidx = 0;
         private float moveTimer = 0;
-
-        private Vector2f velocity = new Vector2f(0, 0);
-
+        
         public float health = 1;
-        private bool alive = true;
-
+        
         private float startDelay = 0;
         private StateTower state;
 
@@ -27,9 +24,13 @@ namespace JamTemplate.Tower
         {
             p = pa;
             state = s;
-            Add("idle", new List<int>(new int[] { 0, 1 }), 0.25f);
-            Play("idle");
-            SetPosition(new Vector2f(p.start.X * GP.WorldTileSizeInPixel, p.start.Y * GP.WorldTileSizeInPixel));
+            Add("walkB", new List<int>(new int[] { 0, 1, 2, 3 }), 0.25f);
+            Add("walkLR", new List<int>(new int[] { 4,5,6,7}), 0.25f);
+            Add("walkT", new List<int>(new int[] { 8, 9, 10, 11 }), 0.25f);
+            Play("walkB");
+            Origin = new Vector2f(8,8);
+
+            Position = new Vector2f(p.start.X * GP.WorldTileSizeInPixel + 14, p.start.Y * GP.WorldTileSizeInPixel + 8);
             startDelay = delay;
         }
 
@@ -42,6 +43,7 @@ namespace JamTemplate.Tower
         {
             base.Update(to);
             startDelay -= to.ElapsedGameTime;
+
             if (startDelay <= 0)
             {
                 moveTimer -= to.ElapsedGameTime;
@@ -49,23 +51,58 @@ namespace JamTemplate.Tower
                 {
                     moveTimer = GP.EnemyMoveTimerMax;
 
+                    //check if end is reached
                     if (pathidx >= p.path.Count)
                     {
                         ReachEnd();
                         return;
                     }
 
+                    // set to absolute position
+                    Vector2i pi = p.getPosAt(pathidx);
+                    Position = (new Vector2f(pi.X * GP.WorldTileSizeInPixel + 14, pi.Y * GP.WorldTileSizeInPixel + 8));
+                    //T.TraceD(Position.ToString());
+
+
+                    // get new direction
                     Path.Dir newdir = p.path[pathidx];
-                    velocity = new Vector2f(Path.Dir2Vec(newdir).X, Path.Dir2Vec(newdir).Y);
+
+                    // get new velocity and set new animation
+                    float vscale = GP.WorldTileSizeInPixel / GP.EnemyMoveTimerMax;
+                    velocity = new Vector2f(Path.Dir2Vec(newdir).X * vscale, Path.Dir2Vec(newdir).Y * vscale);
+
+                    SetWalkingAnimation(newdir);
+
                     pathidx++;
+
                 }
+            }
+            //Position = new Vector2f(160, 32);
+            
 
-                Vector2f newPos = GetPosition();
+        }
 
-                float vscale = GP.WorldTileSizeInPixel / GP.EnemyMoveTimerMax;
-
-                newPos += velocity * to.ElapsedGameTime * vscale;
-                SetPosition(newPos);
+        private void SetWalkingAnimation(Path.Dir newdir)
+        {
+            if (newdir == Path.Dir.T)
+            {
+                Play("walkT");
+                this.SetScale(1, 1);
+            }
+            else if (newdir == Path.Dir.B)
+            {
+                Play("walkB");
+                this.SetScale(1, 1);
+            }
+            else if (newdir == Path.Dir.L)
+            {
+                Play("walkLR");
+                this.SetScale(1, 1);
+            }
+            else if (newdir == Path.Dir.R)
+            {
+                Play("walkLR");
+                this.SetScale(-1, 1);
             }
         }
 

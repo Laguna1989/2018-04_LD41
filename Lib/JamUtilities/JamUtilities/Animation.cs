@@ -17,23 +17,19 @@ namespace JamUtilities
         private int _frameIdx = 0;   // the actual index of the currently displayed sprite in _sprites
 
         public List<SmartSprite> _sprites;
-        public Vector2f velocity = new Vector2f(0, 0);
+        
         public bool alive = true;
 
         public Animation(string fileName, Vector2u spriteSize)
         {
             _sprites = new List<SmartSprite>();
-            Texture t = JamUtilities.TextureManager.GetTextureFromFileName(fileName);
-
-            if (spriteSize.X > t.Size.X || spriteSize.Y > t.Size.Y)
-                throw new ArgumentOutOfRangeException("spriteSize", "selection area out of texture.");
-
-            uint maxIdx = t.Size.X / spriteSize.X;
+            
+            uint maxIdx = TextureManager.GetTextureFromFileName(fileName).Size.X / spriteSize.X;
 
             for (uint i = 0; i != maxIdx; ++i)
             {
                 IntRect rect = new IntRect((int)(i * spriteSize.X), 0, (int)(spriteSize.X), (int)(spriteSize.Y));
-                SmartSprite spr = new SmartSprite(t, rect);
+                SmartSprite spr = new SmartSprite(TextureManager.GetTextureFromFileName(fileName), rect);
                 _sprites.Add(spr);
             }
 
@@ -92,11 +88,7 @@ namespace JamUtilities
             {
                 _s.Update(to);
             }
-
-            Vector2f newPos = GetPosition();
-            newPos += velocity * to.ElapsedGameTime;
-            SetPosition(newPos);
-
+            
         }
         
         public virtual void Draw(RenderWindow rw)
@@ -125,19 +117,32 @@ namespace JamUtilities
             return;
         }
 
-        public Vector2f Position
+        public Vector2f velocity
         {
             get
             {
-                return _sprites[_frameIdx].Position - (ScreenEffects.ScreenEffects.GlobalSpriteOffset + ScreenEffects.ScreenEffects._dragPosition);
+                return _sprites[_frameIdx].velocity;
             }
             set
             {
                 foreach (var _sprite in _sprites)
                 {
-                    _sprite.Position = value + 
-                        (ScreenEffects.ScreenEffects.GlobalSpriteOffset + 
-                         ScreenEffects.ScreenEffects._dragPosition );
+                    _sprite.velocity = value;
+                }
+            }
+        }
+
+        public Vector2f Position
+        {
+            get
+            {
+                return _sprites[_frameIdx].Position;
+            }
+            set
+            {
+                foreach (var _sprite in _sprites)
+                {
+                    _sprite.Position = value;
                 }
             }
         }
