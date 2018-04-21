@@ -25,7 +25,6 @@ namespace JamTemplate
             GP.Window = new RenderWindow(new VideoMode(800, 600, 32), GP.WindowGameName);
             GP.Window.Display();
 
-            
             try
             {
                 SmartText._font = new Font("../GFX/font.ttf");

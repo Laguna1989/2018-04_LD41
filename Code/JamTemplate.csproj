@@ -59,6 +59,8 @@
     <Compile Include="StateIntro.cs" />
     <Compile Include="StateMenu.cs" />
     <Compile Include="StateClicker.cs" />
+    <Compile Include="Tower\Map.cs" />
+    <Compile Include="Tower\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

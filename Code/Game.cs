@@ -119,6 +119,7 @@ namespace JamTemplate
             if (gs == null)
                 throw new ArgumentNullException("gs","cannot switch to a gamestate which is null!");
 
+            Input.Update();
             Game._state = gs;
             Game._state.Init();
         }
