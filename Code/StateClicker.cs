@@ -10,7 +10,7 @@ namespace JamTemplate
 {
     class StateClicker : JamUtilities.GameState
     {
-		public Resources resources;
+
 
 		private SmartSprite button;
 		private bool buttonPressed;
@@ -18,7 +18,6 @@ namespace JamTemplate
         public override void Init()
         {
             base.Init();
-			resources = new Resources();
 
 			button = new SmartSprite(new Texture("../GFX/box.png"));
 			button.Position = new Vector2f(GP.WindowSize.X / 2, GP.WindowSize.Y / 2);
@@ -28,22 +27,23 @@ namespace JamTemplate
         {
             base.Draw(rw);
 			//T.Trace("clicker");
+			
+			DrawUI(rw);
 
-			rw.Draw(button.Sprite);
-        }
+		}
 
 		public override void Update(TimeObject timeObject)
         {
             base.Update(timeObject);
 
-			UpdateManualButton();
+			CheckManualButton();
 
 		}
 
 
 
 
-		private void UpdateManualButton()
+		private void CheckManualButton()
 		{
 			if (JamUtilities.Mouse.MousePositionInWorld.X > button.Position.X - button.Size.X && JamUtilities.Mouse.MousePositionInWorld.X < button.Position.X + button.Size.X)
 			{
@@ -53,13 +53,18 @@ namespace JamTemplate
 					{
 						buttonPressed = true;
 
-						resources.money++;
-						T.Trace(resources.money.ToString());
+						Resources.UpdateMoney();
 					}
 					if (!SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left) && buttonPressed == true)
 						buttonPressed = false;
 				}
 			}
+		}
+		private void DrawUI(RenderWindow rw)
+		{
+			rw.Draw(button.Sprite);
+
+			SmartText.DrawText("Money: " + Resources.money, TextAlignment.LEFT, new Vector2f(5f, 0f), rw);
 		}
     }
 }

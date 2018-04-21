@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using JamUtilities;
 using JamUtilities.Particles;
 using JamUtilities.ScreenEffects;
@@ -10,10 +10,14 @@ namespace JamTemplate
 {
     class Game
     {
+		#region Clicker
+		private float clickerTimer;
+		#endregion
 
-        #region Fields
 
-        public static JamUtilities.GameState _state;
+		#region Fields
+
+		public static JamUtilities.GameState _state;
 
         public static StateClicker clicker;
         public static StateTower tower;
@@ -95,10 +99,21 @@ namespace JamTemplate
             _state.Update(to);
 
             CanBeQuit = false;
-        
-        }
 
-        public void Draw(RenderWindow rw)
+			#region Clicker
+			clickerTimer += deltaT;
+
+			if(clickerTimer >= Resources.INCOME_TICK)
+			{
+				clickerTimer = 0;
+
+				Resources.UpdateIdleIncome();
+			}
+			#endregion
+
+		}
+
+		public void Draw(RenderWindow rw)
         {
             rw.Clear();
             rw.Draw(_background);
