@@ -16,12 +16,14 @@ namespace JamTemplate
 		public static long research { get; set; } = 0;
 
 		public static long moneyPerClick { get; set; } = 1;
-		public static float idleMoneyIncome { get; set; } = 0.1f;
+		public static float idleMoneyIncome { get; set; } = 0f;
 
 		public static float idleResearchIncome { get; set; } = 0;
 
 		public static void UpdateIdleIncome()
 		{
+			UpdateIncomeAmount();
+
 			float moneyRemainder = idleMoneyIncome - (float)((int)idleMoneyIncome);
 			moneyLastTickRemainder += moneyRemainder;
 			if((int)moneyLastTickRemainder > 0)
@@ -47,5 +49,41 @@ namespace JamTemplate
 		{
 			money += moneyPerClick;
 		}
+
+		public static bool DecreaseMoney(long amount)
+		{
+			long newBalacnce = money - amount;
+			if (newBalacnce >= 0)
+			{
+				money = newBalacnce;
+				Console.WriteLine("New balance: " + newBalacnce);
+				return true;
+			}
+			else
+				return false;
+		}
+
+		public static Dictionary<ResourceGainer.Type, ResourceGainer> resourceGainers = new Dictionary<ResourceGainer.Type, ResourceGainer>() {
+			{ ResourceGainer.Type.Squire, new ResourceGainer(ResourceGainer.Type.Squire) },
+			{ ResourceGainer.Type.Farmer, new ResourceGainer(ResourceGainer.Type.Farmer) },
+			{ ResourceGainer.Type.Knight, new ResourceGainer(ResourceGainer.Type.Knight) },
+			{ ResourceGainer.Type.Feudal_Lord, new ResourceGainer(ResourceGainer.Type.Feudal_Lord) },
+			{ ResourceGainer.Type.Church, new ResourceGainer(ResourceGainer.Type.Church) },
+			{ ResourceGainer.Type.Gold_Mine, new ResourceGainer(ResourceGainer.Type.Gold_Mine) },
+			{ ResourceGainer.Type.Diamond_Mine, new ResourceGainer(ResourceGainer.Type.Diamond_Mine) }
+		};
+
+		public static void UpdateIncomeAmount()
+		{
+			idleMoneyIncome = 0;
+			idleResearchIncome = 0;
+			foreach (KeyValuePair<ResourceGainer.Type, ResourceGainer> pair in resourceGainers)
+			{
+
+				idleMoneyIncome += pair.Value.moneyIncome * pair.Value.amount;
+				idleResearchIncome += pair.Value.researchIncome * pair.Value.amount;
+				
+			}
+		} 
 	}
 }
