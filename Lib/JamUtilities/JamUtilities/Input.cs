@@ -67,16 +67,12 @@ namespace JamUtilities
             return pressed != null;
         }
 
+
         public static void Update()
         {
             if (!hasBeenInitialized())
                 Init();
-
-            
-
-
-
-         
+    
             foreach(var currentKey in allKeys)
             {
                 if (Keyboard.IsKeyPressed(currentKey))

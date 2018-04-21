@@ -16,13 +16,18 @@ namespace JamTemplate.Tower
 
         private Vector2f velocity = new Vector2f(0, 0);
 
+        public float health = 1;
         private bool alive = true;
+
+        private float startDelay = 0;
+
         public Enemy (Path pa) : base("../GFX/enemy.png", new Vector2u(16,16))
         {
             p = pa;
             Add("idle", new List<int>(new int[] { 0, 1 }), 0.25f);
             Play("idle");
             SetPosition(new Vector2f(p.start.X * GP.WorldTileSizeInPixel, p.start.Y * GP.WorldTileSizeInPixel));
+            startDelay = (float)(RandomGenerator.Random.NextDouble() * 1.6f);
         }
 
         public override bool IsDead()
@@ -33,25 +38,47 @@ namespace JamTemplate.Tower
         public override void Update(TimeObject to)
         {
             base.Update(to);
-
-            moveTimer -= to.ElapsedGameTime;
-            if (moveTimer <= 0)
+            startDelay -= to.ElapsedGameTime;
+            if (startDelay <= 0)
             {
-                moveTimer = GP.EnemyMoveTimerMax;
+                moveTimer -= to.ElapsedGameTime;
+                if (moveTimer <= 0)
+                {
+                    moveTimer = GP.EnemyMoveTimerMax;
 
-                
-                Path.Dir newdir = p.path[pathidx];
-                velocity = new Vector2f(Path.Dir2Vec(newdir).X, Path.Dir2Vec(newdir).Y);
-                pathidx++;
+                    if (pathidx >= p.path.Count)
+                    {
+                        ReachEnd();
+                        return;
+                    }
+
+                    Path.Dir newdir = p.path[pathidx];
+                    velocity = new Vector2f(Path.Dir2Vec(newdir).X, Path.Dir2Vec(newdir).Y);
+                    pathidx++;
+                }
+
+                Vector2f newPos = GetPosition();
+
+                float vscale = GP.WorldTileSizeInPixel / GP.EnemyMoveTimerMax;
+
+                newPos += velocity * to.ElapsedGameTime * vscale;
+                SetPosition(newPos);
             }
+        }
 
-            Vector2f newPos = GetPosition();
+        private void ReachEnd()
+        {
+            //TODO
+            // for now let enemy die
+            alive = false;
+        }
 
-            float vscale = GP.WorldTileSizeInPixel / GP.EnemyMoveTimerMax;
-
-            newPos += velocity * to.ElapsedGameTime * vscale;
-            SetPosition(newPos);
-            
+        public void hit(float dmg)
+        {
+            health -= dmg;
+            if (health <= 0)
+                alive = false;
+            //T.TraceD(health.ToString());
         }
     }
 }

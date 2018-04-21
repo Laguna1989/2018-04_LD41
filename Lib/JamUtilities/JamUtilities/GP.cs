@@ -17,5 +17,7 @@ namespace JamUtilities
 
         public static int WorldTileSizeInPixel { get; set; } = 32;
         public static float EnemyMoveTimerMax { get; set; } = 0.75f;
+        public static float TowerReloadTime { get; set; } = 0.5f;
+        public static float ShotSpeed { get; set; } = 150;
     }
 }

@@ -8,7 +8,7 @@ namespace JamUtilities
     public class SmartSprite : IGameObject
     {
 
-        private void generalSetup()
+        protected void generalSetup()
         {
             _sprite.Scale = _scaleVector;
             IsInFade = false;
@@ -21,12 +21,9 @@ namespace JamUtilities
         {
             _texture = TextureManager.GetTextureFromFileName(filepath);
             _sprite = new Sprite(_texture);
-
-
             generalSetup();
-
-
         }
+
         public SmartSprite(Texture texture)
         {
             _texture = texture;
@@ -142,9 +139,13 @@ namespace JamUtilities
 
         }
 
-        public virtual void Update(TimeObject timeObject)
+        public virtual void Update(TimeObject to)
         {
-            Update(timeObject.ElapsedGameTime);
+            Update(to.ElapsedGameTime);
+
+            Vector2f newPos = GetPosition();
+            newPos += velocity * to.ElapsedGameTime;
+            SetPosition(newPos);
         }
 
         public void Update(float deltaT)
@@ -270,7 +271,7 @@ namespace JamUtilities
 
         public virtual  bool IsDead()
         {
-            return false;
+            return !alive;
         }
 
         public virtual void GetInput()
@@ -287,11 +288,20 @@ namespace JamUtilities
             Position = newPos;
         }
 
+        public bool containsPoint(Vector2f p)
+        {
+            if (p.X > GetPosition().X && p.Y > GetPosition().Y)
+                if (p.X < GetPosition().X + _sprite.GetLocalBounds().Width * _sprite.Scale.X && p.Y < GetPosition().Y + Sprite.GetLocalBounds().Height * _sprite.Scale.Y)
+                    return true;
+
+            return false;
+        }
+
 
         #region FIELDS
 
-        private Texture _texture;
-        private Sprite _sprite;
+        protected Texture _texture;
+        protected Sprite _sprite;
         public static Vector2f _scaleVector;
 
         public Vector2f Position
@@ -341,6 +351,11 @@ namespace JamUtilities
 
         private Sprite _flashOverlay = null;
         private Texture _flashTexture = null;
+
+        public bool alive = true;
+
+        protected Vector2f velocity = new Vector2f(0, 0);
+
         #endregion FIELDS
     }
 }

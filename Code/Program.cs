@@ -72,6 +72,7 @@ namespace JamTemplate
 
 
                 Input.Update();
+                JamUtilities.Mouse.Update();
                 myGame.GetInput();
                 if (myGame.CanBeQuit)
                 {
@@ -82,7 +83,7 @@ namespace JamTemplate
                 }
 
 
-                JamUtilities.Mouse.Update();
+                
 
                 myGame.Update(time);
                 GP.Window.SetView(GP.WindowGameView);
