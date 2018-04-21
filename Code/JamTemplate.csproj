@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clicker\ResourceGainer.cs" />
     <Compile Include="Clicker\Resources.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
