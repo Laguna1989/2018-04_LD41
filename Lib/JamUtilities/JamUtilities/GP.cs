@@ -15,6 +15,8 @@ namespace JamUtilities
 
         public static string WindowGameName { get; private set; } = "$GameTitle$";
 
+        public static int WorldTileSizeInPixel { get; set; } = 32;
+
         
     }
 }
