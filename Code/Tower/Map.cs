@@ -23,17 +23,50 @@ namespace JamTemplate.Tower
         {
             allPaths = new List<Path>();
 
-            Path p = new Path();
-            p.start = new Vector2i(1, 10);
-            p.Add(Path.Dir.R, 5);
-            p.Add(Path.Dir.B, 2);
-            p.Add(Path.Dir.R, 3);
-            p.Add(Path.Dir.T, 1);
-            p.Add(Path.Dir.R, 5);
+            {
+                Path p = new Path();
+                p.start = new Vector2i(0, 1);
+                p.Add(Path.Dir.R, 5);
+                p.Add(Path.Dir.B, 7);
+                p.Add(Path.Dir.R, 3);
+                p.Add(Path.Dir.T, 2);
+                p.Add(Path.Dir.R, 7);
+                p.Add(Path.Dir.B, 2);
+                p.Add(Path.Dir.R, 3);
 
-            allPaths.Add(p);
+                allPaths.Add(p);
+            }
+
+            {
+                Path p = new Path();
+                p.start = new Vector2i(0, 4);
+                p.Add(Path.Dir.R, 10);
+                p.Add(Path.Dir.B, 10);
+                p.Add(Path.Dir.R, 5);
+
+
+                allPaths.Add(p);
+            }
+            {
+                Path p = new Path();
+                p.start = new Vector2i(0, 12);
+                p.Add(Path.Dir.R, 3);
+                p.Add(Path.Dir.B, 1);
+                p.Add(Path.Dir.R, 3);
+                p.Add(Path.Dir.T, 2);
+                p.Add(Path.Dir.R, 4);
+                p.Add(Path.Dir.B, 3);
+                p.Add(Path.Dir.L, 2);
+                p.Add(Path.Dir.B, 3);
+                p.Add(Path.Dir.R, 6);
+                
+
+                allPaths.Add(p);
+            }
+
             
-            foreach(Path pp in allPaths)
+
+            foreach (Path pp in allPaths)
             {
                 for(int i = 0; i != pp.path.Count; ++i)
                 {

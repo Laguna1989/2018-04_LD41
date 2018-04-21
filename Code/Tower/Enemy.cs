@@ -20,10 +20,12 @@ namespace JamTemplate.Tower
         private bool alive = true;
 
         private float startDelay = 0;
+        private StateTower state;
 
-        public Enemy (Path pa) : base("../GFX/enemy.png", new Vector2u(16,16))
+        public Enemy (Path pa, StateTower  s) : base("../GFX/enemy.png", new Vector2u(16,16))
         {
             p = pa;
+            state = s;
             Add("idle", new List<int>(new int[] { 0, 1 }), 0.25f);
             Play("idle");
             SetPosition(new Vector2f(p.start.X * GP.WorldTileSizeInPixel, p.start.Y * GP.WorldTileSizeInPixel));
@@ -68,8 +70,7 @@ namespace JamTemplate.Tower
 
         private void ReachEnd()
         {
-            //TODO
-            // for now let enemy die
+            state.looseLife();
             alive = false;
         }
 
@@ -78,7 +79,7 @@ namespace JamTemplate.Tower
             health -= dmg;
             if (health <= 0)
                 alive = false;
-            //T.TraceD(health.ToString());
+            
         }
     }
 }

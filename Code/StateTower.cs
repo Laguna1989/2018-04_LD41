@@ -18,6 +18,8 @@ namespace JamTemplate
 
         public int wave = 1;
 
+        public int health = 10;
+
         public override void Init()
         {
             base.Init();
@@ -32,11 +34,12 @@ namespace JamTemplate
 
             allTowers = new TowerGroup();
             Add(allTowers);
-
-
-
-            Tower.Tower t = new Tower.Tower(7, 9, this);
-            allTowers.Add(t);
+            
+            allTowers.Add(new Tower.Tower(3, 3, this));
+            allTowers.Add(new Tower.Tower(6, 7, this));
+            allTowers.Add(new Tower.Tower(8, 12, this));
+            
+            allTowers.Add(new Tower.Tower(11, 13, this));
 
             allShots = new ShotGroup();
             Add(allShots);
@@ -89,7 +92,9 @@ namespace JamTemplate
             int count = 3 + 5 * wave;
             for(int i = 0; i != count; ++i)
             {
-                Enemy e = new Enemy(m.allPaths[0]);
+                int idx = RandomGenerator.Int(0, m.allPaths.Count);
+
+                Enemy e = new Enemy(m.allPaths[idx], this);
                 allEnemies.Add(e);
             }
             wave++;
@@ -101,6 +106,11 @@ namespace JamTemplate
                 throw new ArgumentNullException();
 
             allShots.Add(s);
+        }
+
+        public void looseLife ()
+        {
+            health--;
         }
     }
 }
