@@ -59,6 +59,7 @@
     <Compile Include="Palette.cs" />
     <Compile Include="T.cs" />
     <Compile Include="TextButton.cs" />
+    <Compile Include="TextIconButton.cs" />
     <Compile Include="Tweens\SpriteScaleTween.cs" />
     <Compile Include="Tweens\SpriteAlphaTween.cs" />
     <Compile Include="Tweens\ShapeScaleTween.cs" />

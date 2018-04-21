@@ -101,9 +101,10 @@ namespace JamTemplate
 
             if (Input.justPressed[Keyboard.Key.N])
             {
-                
+                Input.justPressed[Keyboard.Key.N] = false;
+                Input.pressed[Keyboard.Key.N] = false;
 
-                    SpawnWave();
+                SpawnWave();
             }
                 
 

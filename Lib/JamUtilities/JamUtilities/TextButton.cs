@@ -9,9 +9,10 @@ namespace JamUtilities
 {
     public class TextButton : IGameObject
     {
-        private Sprite sprNormal;
-        private Sprite sprOver;
-        private Sprite sprPressed;
+        protected Sprite sprNormal;
+        protected Sprite sprOver;
+        protected Sprite sprPressed;
+        protected Color tc;
 
         private int mode = 0;   // 0 normal, 1 over, 2 pressed
 
@@ -21,6 +22,8 @@ namespace JamUtilities
 
         public Action PressCallback = null;
 
+        protected Vector2f textOffset = new Vector2f(5, 5);
+
         public TextButton(String t, Action cb)
         {
             text = t;
@@ -29,9 +32,10 @@ namespace JamUtilities
             sprOver = new Sprite(TextureManager.GetTextureFromFileName("../GFX/btn_over.png"));
             sprPressed = new Sprite(TextureManager.GetTextureFromFileName("../GFX/btn_down.png"));
             sprNormal.Scale = sprOver.Scale = sprPressed.Scale = new Vector2f(2, 2);
+            tc = Color.White;
         }
 
-        public void Draw(RenderWindow rw)
+        public virtual void Draw(RenderWindow rw)
         {
             if (mode == 0)
                 rw.Draw(sprNormal);
@@ -39,7 +43,7 @@ namespace JamUtilities
                 rw.Draw(sprOver);
             else
                 rw.Draw(sprPressed);
-            SmartText.DrawText(text, new Vector2f(sprNormal.Position.X + 5, sprNormal.Position.Y + 5), rw);
+            SmartText.DrawText(text, new Vector2f(sprNormal.Position.X + textOffset.X, sprNormal.Position.Y + textOffset.Y), tc, rw);
         }
 
         public void GetInput()
@@ -87,14 +91,15 @@ namespace JamUtilities
             return false;
         }
 
-        public void SetPosition(Vector2f newPos)
+        public virtual void SetPosition(Vector2f newPos)
         {
             sprNormal.Position = sprOver.Position = sprPressed.Position = newPos;
         }
 
-        public void Update(TimeObject to)
+        public virtual void Update(TimeObject to)
         {
-            sprNormal.Color = sprOver.Color = sprPressed.Color = ((active)? Color.White: new Color(100,100,100));
+            sprNormal.Color = sprOver.Color = sprPressed.Color = tc = ((active)? Color.White: new Color(100,100,100));
+            
             return;
         }
     }

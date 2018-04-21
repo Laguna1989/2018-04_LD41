@@ -25,13 +25,13 @@ namespace JamTemplate.Tower
 
         public Enemy target = null;
         public float shootTimer = 0;
-        private float range = GP.WorldTileSizeInPixel * 2;
+        private float range = GP.WorldTileSizeInPixel * 2.5f;
 
         private Shape MenuBG;
         public bool showMenu = false;
-        public TextButton tbDamage;
-        public TextButton tbRange;
-        public TextButton tbRate;
+        public TextIconButton tbDamage;
+        public TextIconButton tbRange;
+        public TextIconButton tbRate;
 
         private long costDamage = 2; 
         private long costRate = 2;
@@ -43,10 +43,10 @@ namespace JamTemplate.Tower
             tx = x;
             ty = y;
             ReloadSprite();
-            MenuBG = new RectangleShape(new Vector2f(200, 100));
-            tbDamage = new TextButton("damage",LevelUpDmg);
-            tbRange = new TextButton("range", LevelUpRange);
-            tbRate = new TextButton("rate", LevelUpRate);
+            MenuBG = new RectangleShape(new Vector2f(200, 150));
+            tbDamage = new TextIconButton("","../GFX/ic_dmg.png", LevelUpDmg);
+            tbRange = new TextIconButton("", "../GFX/ic_rng.png", LevelUpRange);
+            tbRate = new TextIconButton("", "../GFX/ic_rt.png", LevelUpRate);
         }
 
         private void LevelUpDmg()
@@ -58,13 +58,14 @@ namespace JamTemplate.Tower
             costDamage = (long)(2 * Math.Pow(levelDamage, 1.1));
         }
 
+
         private void LevelUpRange()
         {
             this.Flash(Color.Green, 0.25f);
             T.TraceD("level up rng");
             Resources.money -= costRange;
             levelRange++;
-            range = GP.WorldTileSizeInPixel * (2 + 0.5f * levelRange);
+            range = GP.WorldTileSizeInPixel * (2.5f + 0.45f * levelRange);
             costRange = (long)(2 * Math.Pow(levelRange, 1.1));
         }
 
@@ -98,6 +99,9 @@ namespace JamTemplate.Tower
             tbDamage.Update(to);
             tbRange.Update(to);
             tbRate.Update(to);
+            tbDamage.text = "l." + levelDamage + " c " + costDamage;
+            tbRange.text = "l." + levelRange + " c " + costRange;
+            tbRate.text = "l." + levelRate+ " c " + costRate;
 
             MenuBG.Position = this.Position + new Vector2f(this.Sprite.GetLocalBounds().Width, this.Sprite.GetLocalBounds().Height)
                 + new Vector2f(32, -32);
@@ -152,7 +156,7 @@ namespace JamTemplate.Tower
             float d = range;
             foreach(Enemy e in state.allEnemies)
             {
-                Vector2f dir = new Vector2f(e.GetPosition().X - GetPosition().X, e.GetPosition().Y - GetPosition().Y);
+                Vector2f dir = new Vector2f(e.GetPosition().X - (GetPosition().X + 32), e.GetPosition().Y - (GetPosition().Y+ 32));
                 float dt = MathStuff.GetLength(dir);
                 
                 if (dt <= d)
