@@ -60,6 +60,8 @@
     <Compile Include="StateIntro.cs" />
     <Compile Include="StateMenu.cs" />
     <Compile Include="StateClicker.cs" />
+    <Compile Include="Tower\Enemy.cs" />
+    <Compile Include="Tower\EnemyGroup.cs" />
     <Compile Include="Tower\Map.cs" />
     <Compile Include="Tower\Path.cs" />
     <Compile Include="Tower\Tile.cs" />

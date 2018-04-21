@@ -28,11 +28,11 @@ namespace JamTemplate.Tower
             p.Add(Path.Dir.R, 5);
             p.Add(Path.Dir.B, 2);
             p.Add(Path.Dir.R, 3);
-            p.Add(Path.Dir.T, 2);
+            p.Add(Path.Dir.T, 1);
+            p.Add(Path.Dir.R, 5);
+
             allPaths.Add(p);
-
-
-
+            
             foreach(Path pp in allPaths)
             {
                 for(int i = 0; i != pp.path.Count; ++i)

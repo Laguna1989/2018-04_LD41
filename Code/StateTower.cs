@@ -12,12 +12,22 @@ namespace JamTemplate
     class StateTower : JamUtilities.GameState
     {
         public Map m;
-        
+        public EnemyGroup allEnemies;
+           
         public override void Init()
         {
             base.Init();
             m = new Map();
             Add(m);
+
+            allEnemies = new EnemyGroup();
+
+            Enemy e = new Enemy(m.allPaths[0]);
+            allEnemies.Add(e);
+
+            Add(allEnemies);
+
+
         }
 
         public override void Draw(RenderWindow rw)

@@ -16,7 +16,6 @@ namespace JamUtilities
         public static string WindowGameName { get; private set; } = "$GameTitle$";
 
         public static int WorldTileSizeInPixel { get; set; } = 32;
-
-        
+        public static float EnemyMoveTimerMax { get; set; } = 0.75f;
     }
 }
