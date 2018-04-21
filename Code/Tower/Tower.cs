@@ -36,7 +36,7 @@ namespace JamTemplate.Tower
             _sprite = new SFML.Graphics.Sprite(_texture);
             generalSetup();
 
-            SetPosition(new SFML.Window.Vector2f(tx * GP.WorldTileSizeInPixel, ty * GP.WorldTileSizeInPixel));
+            SetPosition(new SFML.Window.Vector2f(tx * GP.WorldTileSizeInPixel, ty * GP.WorldTileSizeInPixel - 2));
         }
 
         public override void Update(TimeObject to)
@@ -44,12 +44,7 @@ namespace JamTemplate.Tower
             base.Update(to);
 
             shootTimer -= to.ElapsedGameTime;
-
-            //if (target != null)
-            //    T.TraceD(target.ToString());
-            //else
-            //    T.TraceD("null");
-
+            
             if (shootTimer <= 0)
             {
                 target = getClosestTarget();

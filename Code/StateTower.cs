@@ -39,11 +39,11 @@ namespace JamTemplate
             allTowers = new TowerGroup();
             Add(allTowers);
             
-            allTowers.Add(new Tower.Tower(3, 3, this));
-            allTowers.Add(new Tower.Tower(6, 7, this));
+            allTowers.Add(new Tower.Tower(3, 2, this));
+            allTowers.Add(new Tower.Tower(6, 6, this));
             allTowers.Add(new Tower.Tower(8, 12, this));
             
-            allTowers.Add(new Tower.Tower(11, 13, this));
+            allTowers.Add(new Tower.Tower(11, 12, this));
 
             castle = new Animation("../GFX/castle.png", new Vector2u(144, 96));
             castle.Add("idle", new List<int>(new int[] { 0 }), 1);
