@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SFML.Graphics;
 
 namespace JamTemplate.Tower
 {
@@ -22,12 +23,16 @@ namespace JamTemplate.Tower
         public float shootTimer = 0;
         private float range = 100;
 
+        private Shape MenuBG;
+
+
         public Tower (int x, int y, StateTower s) : base ("../GFX/tower.png")
         {
             state = s;
             tx = x;
             ty = y;
             ReloadSprite();
+            MenuBG = new RectangleShape(new Vector2f(100, 100));
         }
 
         private void ReloadSprite()
@@ -42,9 +47,16 @@ namespace JamTemplate.Tower
         public override void Update(TimeObject to)
         {
             base.Update(to);
+            handleShooting(to.ElapsedGameTime);
 
-            shootTimer -= to.ElapsedGameTime;
-            
+            MenuBG.Position = this.Position + new Vector2f(this.Sprite.GetLocalBounds().Width, this.Sprite.GetLocalBounds().Height)
+                + new Vector2f(32, -32);
+        }
+
+        private void handleShooting(float elapsed)
+        {
+            shootTimer -= elapsed;
+
             if (shootTimer <= 0)
             {
                 target = getClosestTarget();
@@ -56,7 +68,20 @@ namespace JamTemplate.Tower
                     state.SpawnShot(s);
                 }
             }
+        }
 
+        public override void Draw(RenderWindow rw)
+        {
+            base.Draw(rw);
+            
+        }
+
+        public void DrawMenu(RenderWindow rw)
+        {
+            if (showMenu)
+            {
+                rw.Draw(MenuBG);
+            }
         }
 
         private Enemy getClosestTarget()
@@ -79,18 +104,23 @@ namespace JamTemplate.Tower
 
         public override void GetInput()
         {
+            if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Right))
+            {
+                state.CloseAllMenus();
+            }
             if (JamUtilities.Mouse.justPressed)
             {
-                T.TraceD("clicked");
+                
                 if (containsPoint(JamUtilities.Mouse.MousePositionInWorld))
                 {
                     state.CloseAllMenus();
                     showMenu = true;
-
+                    T.TraceD("hit");
                     // todo nice level up menu?
                     level++;
                 }
             }
+            
         }
 
         

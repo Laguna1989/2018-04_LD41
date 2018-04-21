@@ -141,11 +141,13 @@ namespace JamUtilities
 
         public virtual void Update(TimeObject to)
         {
-            Update(to.ElapsedGameTime);
+            
 
             Vector2f newPos = GetPosition();
             newPos += velocity * to.ElapsedGameTime;
             SetPosition(newPos);
+
+            Update(to.ElapsedGameTime);
         }
 
         public void Update(float deltaT)

@@ -23,6 +23,7 @@ namespace JamTemplate
 
         private Animation castle;
 
+
         
         public override void Init()
         {
@@ -30,21 +31,23 @@ namespace JamTemplate
             m = new Map();
             Add(m);
 
+            allTowers = new TowerGroup();
+            Add(allTowers);
+
+            allTowers.Add(new Tower.Tower(3, 2, this));
+            allTowers.Add(new Tower.Tower(6, 6, this));
+            allTowers.Add(new Tower.Tower(8, 12, this));
+
+            allTowers.Add(new Tower.Tower(11, 12, this));
+
+
             allEnemies = new EnemyGroup();
             allEnemies.DeleteCallback += EnemyDead;
             SpawnWave();
             Add(allEnemies);
 
 
-            allTowers = new TowerGroup();
-            Add(allTowers);
             
-            allTowers.Add(new Tower.Tower(3, 2, this));
-            allTowers.Add(new Tower.Tower(6, 6, this));
-            allTowers.Add(new Tower.Tower(8, 12, this));
-            
-            allTowers.Add(new Tower.Tower(11, 12, this));
-
             castle = new Animation("../GFX/castle.png", new Vector2u(144, 96));
             castle.Add("idle", new List<int>(new int[] { 0 }), 1);
             castle.Play("idle");
@@ -66,7 +69,18 @@ namespace JamTemplate
         {
             base.Draw(rw);
             //rw.Draw(test);
-        
+            
+            foreach(Tower.Tower t in allTowers)
+            {
+                t.DrawMenu(rw);
+            }
+        }
+
+        public override void DrawOverlay(RenderWindow rw)
+        {
+            base.DrawOverlay(rw);
+            SmartText.DrawText("Gold: " + Resources.money, new Vector2f(10, 4), rw);
+            SmartText.DrawText("Lives: " + this.health , new Vector2f(10, 30), rw);
         }
 
         public override void Update(TimeObject timeObject)
