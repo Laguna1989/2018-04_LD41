@@ -80,9 +80,10 @@ namespace JamTemplate.Tower
         private void CreateWorld()
         {
             allTiles = new List<Tile>();
-            for (int i = 0; i != 50; ++i)
+            for (int i = 0; i != 25; ++i)
             {
-                for (int j = 0; j != 30; ++j)
+                //T.Trace("loading tiles: " + i.ToString());
+                for (int j = 0; j != 20; ++j)
                 {
                     Tile t = new Tile(Tile.TileType.Grass, i, j);
                     AddTile(t);

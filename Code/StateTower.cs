@@ -69,7 +69,7 @@ namespace JamTemplate
                     if (s.IsDead())
                         continue;
 
-                    if (SFMLCollision.Collision.CircleTest(s.Sprite, e._sprites[0].Sprite))
+                    if (SFMLCollision.Collision.BoundingBoxTest(s._sprites[0].Sprite, e._sprites[0].Sprite))
                     {
                         e.hit(s.dmg);
                         s.hit();

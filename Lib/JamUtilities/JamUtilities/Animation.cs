@@ -17,6 +17,8 @@ namespace JamUtilities
         private int _frameIdx = 0;   // the actual index of the currently displayed sprite in _sprites
 
         public List<SmartSprite> _sprites;
+        public Vector2f velocity = new Vector2f(0, 0);
+        public bool alive = true;
 
         public Animation(string fileName, Vector2u spriteSize)
         {
@@ -90,6 +92,11 @@ namespace JamUtilities
             {
                 _s.Update(to);
             }
+
+            Vector2f newPos = GetPosition();
+            newPos += velocity * to.ElapsedGameTime;
+            SetPosition(newPos);
+
         }
         
         public virtual void Draw(RenderWindow rw)
@@ -110,7 +117,7 @@ namespace JamUtilities
 
         public virtual bool IsDead()
         {
-            return false;
+            return !alive;
         }
 
         public virtual void GetInput()
