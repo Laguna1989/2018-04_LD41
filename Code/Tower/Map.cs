@@ -11,22 +11,47 @@ namespace JamTemplate.Tower
     class Map : IGameObject
     {
         public List<Tile> allTiles;
+        public List<Path> allPaths;
 
         public Map()
+        {
+            CreateWorld();
+            CreatePath();
+        }
+
+        private void CreatePath()
+        {
+            allPaths = new List<Path>();
+
+            Path p = new Path();
+            p.start = new Vector2i(1, 10);
+            p.Add(Path.Dir.R, 5);
+            p.Add(Path.Dir.B, 2);
+            p.Add(Path.Dir.R, 3);
+            p.Add(Path.Dir.T, 2);
+            allPaths.Add(p);
+
+
+
+            foreach(Path pp in allPaths)
+            {
+                for(int i = 0; i != pp.path.Count; ++i)
+                {
+                    Vector2i pos = pp.getPosAt(i);
+                    //T.TraceD(pos.ToString());
+                    GetTileAt(pos.X, pos.Y).SetTileType(Tile.TileType.Street);
+                }
+            }
+        }
+
+        private void CreateWorld()
         {
             allTiles = new List<Tile>();
             for (int i = 0; i != 50; ++i)
             {
                 for (int j = 0; j != 30; ++j)
                 {
-                    int idx = RandomGenerator.Int(0, 2);
-                    T.TraceD(idx.ToString());
-                    Tile.TileType tt = Tile.TileType.Grass;
-                    if (idx == 1)
-                    {
-                        tt = Tile.TileType.Street;
-                    }
-                    Tile t = new Tile(tt, i, j);
+                    Tile t = new Tile(Tile.TileType.Grass, i, j);
                     AddTile(t);
                 }
             }

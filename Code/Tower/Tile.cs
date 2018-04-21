@@ -20,7 +20,7 @@ namespace JamTemplate.Tower
 
         private static string TT2FileName (TileType tt)
         {
-            T.TraceD(tt.ToString());
+            //T.TraceD(tt.ToString());
             if (tt == TileType.Grass)
                 return "../GFX/grass.png";
             else if (tt == TileType.Street)
@@ -62,13 +62,22 @@ namespace JamTemplate.Tower
         public TileType tt;
         public int tx;
         public int ty;
-        public Tile (TileType t, int x, int y)
+
+        public void SetTileType ( TileType t)
         {
-            spr = new Sprite(TextureManager.GetTextureFromFileName(TT2FileName(tt)));
+            tt = t;
+            spr = new Sprite(TextureManager.GetTextureFromFileName(TT2FileName(t)));
             spr.Scale = SmartSprite._scaleVector;
+            SetPosition(new Vector2f(GP.WorldTileSizeInPixel * tx, GP.WorldTileSizeInPixel * ty));
+        }
+
+        public Tile(TileType t, int x, int y)
+        {
+
             tx = x;
             ty = y;
-            SetPosition(new Vector2f(GP.WorldTileSizeInPixel * x, GP.WorldTileSizeInPixel * y));
-        }
+
+            SetTileType(t);
+        }            
     }
 }

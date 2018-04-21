@@ -60,6 +60,7 @@
     <Compile Include="StateMenu.cs" />
     <Compile Include="StateClicker.cs" />
     <Compile Include="Tower\Map.cs" />
+    <Compile Include="Tower\Path.cs" />
     <Compile Include="Tower\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
