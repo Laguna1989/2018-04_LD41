@@ -12,7 +12,7 @@ namespace JamTemplate.Tower
 
         private float age = 0;
 
-        public float dmg = 1;
+        public float dmg;
 
 
         public Shot(Tower t, Enemy e) : base("../GFX/arrow.png",new Vector2u(16,16))
@@ -24,14 +24,17 @@ namespace JamTemplate.Tower
             else
                 Play("1");
 
+            dmg = GP.ShotDamageBase * (float)(Math.Pow((t.level +1), 0.75f));
 
 
             
 
 
-            SetPosition(t.GetPosition());
+            SetPosition(t.GetPosition() + new Vector2f(16,16));
+
             float tx = t.GetPosition().X;
             float ty = t.GetPosition().Y;
+
             float dx = e.GetPosition().X - tx;
             float dy = e.GetPosition().Y - ty;
 
@@ -58,7 +61,7 @@ namespace JamTemplate.Tower
         {
             base.Update(to);
             age += to.ElapsedGameTime;
-            if (age >= 1)
+            if (age >= GP.ShotMaxLifeTime)
                 alive = false;
         }
 

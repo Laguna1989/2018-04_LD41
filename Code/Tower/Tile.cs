@@ -84,6 +84,12 @@ namespace JamTemplate.Tower
                 spr1 = new Sprite(TextureManager.GetTextureFromFileName("../GFX/grass.png"), new IntRect(idx * 16, 0, 16, 16));
                 spr2 = new Sprite(TextureManager.GetTextureFromFileName("../GFX/grass.png"), new IntRect((idx + 8) * 16, 0, 16, 16));
             }
+            else if (tt == TileType.Street)
+            {
+                int idx = RandomGenerator.Int(0, 5);
+                spr1 = new Sprite(TextureManager.GetTextureFromFileName("../GFX/street.png"), new IntRect(idx * 16, 0, 16, 16));
+                spr2 = new Sprite(TextureManager.GetTextureFromFileName("../GFX/street.png"), new IntRect(idx * 16, 0, 16, 16));
+            }
             else
             {
                 spr1 = new Sprite(TextureManager.GetTextureFromFileName(TT2FileName(tt)));

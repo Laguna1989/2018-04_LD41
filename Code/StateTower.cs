@@ -61,6 +61,9 @@ namespace JamTemplate
         {
             base.Update(timeObject);
 
+            if (Input.justPressed[Keyboard.Key.N])
+                SpawnWave();
+
             foreach(Shot s in allShots)
             {
                 
@@ -90,12 +93,20 @@ namespace JamTemplate
         public void SpawnWave()
         {
             int count = 3 + 5 * wave;
+
+            List<int> pathcounter = new List<int>();
+            for (int i = 0; i != m.allPaths.Count; ++i)
+            {
+                pathcounter.Add(0);
+            }
+
             for(int i = 0; i != count; ++i)
             {
                 int idx = RandomGenerator.Int(0, m.allPaths.Count);
-
-                Enemy e = new Enemy(m.allPaths[idx], this);
+                
+                Enemy e = new Enemy(m.allPaths[idx], this, pathcounter[idx] * 0.85f);
                 allEnemies.Add(e);
+                pathcounter[idx]++;
             }
             wave++;
         }

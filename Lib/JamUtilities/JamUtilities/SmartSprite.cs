@@ -150,6 +150,10 @@ namespace JamUtilities
 
         public void Update(float deltaT)
         {
+            _flashOverlay.Scale = _scaleVector;
+            _flashOverlay.Rotation = Rotation;
+            _flashOverlay.Origin = Origin;
+            _flashOverlay.Position = Position;
             if (IsInFlash)
             {
                 _flashOverlay.TextureRect = _sprite.TextureRect;
@@ -164,10 +168,8 @@ namespace JamUtilities
 
                 _flashOverlay.Color = new Color(_flashColor.R, _flashColor.G, _flashColor.B, va);
 
-                _flashOverlay.Scale = _scaleVector;
-                _flashOverlay.Rotation = Rotation;
-                _flashOverlay.Origin = Origin;
-                _flashOverlay.Position = Position;
+               
+                
 
                 _timeSinceStartFlash += deltaT;
                 if (_timeSinceStartFlash >= _totalTimeFlash)

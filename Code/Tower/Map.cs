@@ -25,8 +25,8 @@ namespace JamTemplate.Tower
 
             {
                 Path p = new Path();
-                p.start = new Vector2i(0, 1);
-                p.Add(Path.Dir.R, 5);
+                p.start = new Vector2i(-1, 1);
+                p.Add(Path.Dir.R, 6);
                 p.Add(Path.Dir.B, 7);
                 p.Add(Path.Dir.R, 3);
                 p.Add(Path.Dir.T, 2);
@@ -39,8 +39,8 @@ namespace JamTemplate.Tower
 
             {
                 Path p = new Path();
-                p.start = new Vector2i(0, 4);
-                p.Add(Path.Dir.R, 10);
+                p.start = new Vector2i(-1, 4);
+                p.Add(Path.Dir.R, 11);
                 p.Add(Path.Dir.B, 10);
                 p.Add(Path.Dir.R, 5);
 
@@ -49,8 +49,8 @@ namespace JamTemplate.Tower
             }
             {
                 Path p = new Path();
-                p.start = new Vector2i(0, 12);
-                p.Add(Path.Dir.R, 3);
+                p.start = new Vector2i(-1, 12);
+                p.Add(Path.Dir.R, 4);
                 p.Add(Path.Dir.B, 1);
                 p.Add(Path.Dir.R, 3);
                 p.Add(Path.Dir.T, 2);
@@ -80,10 +80,10 @@ namespace JamTemplate.Tower
         private void CreateWorld()
         {
             allTiles = new List<Tile>();
-            for (int i = 0; i != 25; ++i)
+            for (int i = -1; i != 25; ++i)
             {
                 //T.Trace("loading tiles: " + i.ToString());
-                for (int j = 0; j != 20; ++j)
+                for (int j = -1; j != 20; ++j)
                 {
                     Tile t = new Tile(Tile.TileType.Grass, i, j);
                     AddTile(t);

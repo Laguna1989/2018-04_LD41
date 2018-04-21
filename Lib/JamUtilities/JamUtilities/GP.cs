@@ -16,8 +16,14 @@ namespace JamUtilities
         public static string WindowGameName { get; private set; } = "$GameTitle$";
 
         public static int WorldTileSizeInPixel { get; set; } = 32;
+
+
         public static float EnemyMoveTimerMax { get; set; } = 0.75f;
-        public static float TowerReloadTime { get; set; } = 0.5f;
-        public static float ShotSpeed { get; set; } = 150;
+        public static float TowerReloadTime { get; set; } = 1.05f;
+
+        public static float ShotSpeed { get; set; } = 175;
+        public static float ShotDamageBase { get; set; } = 0.75f;
+        public static float ShotMaxLifeTime { get; set; } = 2.5f;
+
     }
 }

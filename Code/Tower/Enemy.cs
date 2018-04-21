@@ -1,4 +1,5 @@
 ﻿using JamUtilities;
+using SFML.Graphics;
 using SFML.Window;
 using System;
 using System.Collections.Generic;
@@ -22,14 +23,14 @@ namespace JamTemplate.Tower
         private float startDelay = 0;
         private StateTower state;
 
-        public Enemy (Path pa, StateTower  s) : base("../GFX/enemy.png", new Vector2u(16,16))
+        public Enemy (Path pa, StateTower  s, float delay = 0) : base("../GFX/enemy.png", new Vector2u(16,16))
         {
             p = pa;
             state = s;
             Add("idle", new List<int>(new int[] { 0, 1 }), 0.25f);
             Play("idle");
             SetPosition(new Vector2f(p.start.X * GP.WorldTileSizeInPixel, p.start.Y * GP.WorldTileSizeInPixel));
-            startDelay = (float)(RandomGenerator.Random.NextDouble() * 1.6f);
+            startDelay = delay;
         }
 
         public override bool IsDead()
@@ -76,10 +77,11 @@ namespace JamTemplate.Tower
 
         public void hit(float dmg)
         {
+            Flash(Color.Red, 0.25f);
             health -= dmg;
             if (health <= 0)
                 alive = false;
-            
+            //T.Trace(health.ToString());   
         }
     }
 }
