@@ -65,7 +65,11 @@
     <Compile Include="Tower\EnemyGroup.cs" />
     <Compile Include="Tower\Map.cs" />
     <Compile Include="Tower\Path.cs" />
+    <Compile Include="Tower\Shot.cs" />
+    <Compile Include="Tower\ShotGroup.cs" />
     <Compile Include="Tower\Tile.cs" />
+    <Compile Include="Tower\Tower.cs" />
+    <Compile Include="Tower\TowerGroup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

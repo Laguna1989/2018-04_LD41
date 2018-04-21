@@ -93,7 +93,7 @@ namespace JamTemplate
 
             TimeObject to = Timing.Update(deltaT);
             
-            JamUtilities.Mouse.Update();
+            
             TweenManager.Update(to);
             TimeManager.Update(to);
             _state.Update(to);

@@ -23,6 +23,14 @@ namespace JamUtilities
 
         public static bool IsMouseInWindow { get; private set; }
 
+
+        public static bool pressed = false;
+        public static bool released = false;
+        public static bool justPressed = false;
+        public static bool justReleased = false;
+        
+
+
         public static void Update()
         {
             MousePositionOnScreen = SFML.Window.Mouse.GetPosition();
@@ -40,7 +48,26 @@ namespace JamUtilities
             {
                 MousePositionInWindow = MousePositionOnScreen;
             }
-
+            justPressed = false;
+            justReleased = false;
+            if(SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left))
+            {
+                 if (pressed == false)
+                     justPressed = true;
+                else
+                    justPressed = false;
+                pressed = true;
+                released = false;
+            }
+            else
+            {
+                if (pressed == true)
+                    justReleased = true;
+                else
+                    justReleased = false;
+                pressed = false;
+                released = true;
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ namespace JamUtilities
         private int _animIdx = 0;    // a simple counter
         private int _frameIdx = 0;   // the actual index of the currently displayed sprite in _sprites
 
-        List<SmartSprite> _sprites;
+        public List<SmartSprite> _sprites;
 
         public Animation(string fileName, Vector2u spriteSize)
         {

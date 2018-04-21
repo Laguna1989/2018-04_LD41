@@ -9,18 +9,13 @@ using System.Text;
 
 namespace JamTemplate.Tower
 {
-    class EnemyGroup : IGameObject
+    class TowerGroup : IGameObject
     {
-        public List<Enemy> members { get; private set; }
+        public List<Tower> members { get; private set; }
 
-        public delegate void DelteCallBackType(Enemy e);
-        public DelteCallBackType DeleteCallback = null;
-
-        
-
-        public EnemyGroup()
+        public TowerGroup()
         {
-            members = new List<Enemy>();
+            members = new List<Tower>();
         }
 
 
@@ -47,7 +42,7 @@ namespace JamTemplate.Tower
 
         public void Update(TimeObject to)
         {
-            foreach (Enemy go in members)
+            foreach (Tower go in members)
             {
                 go.Update(to);
             }
@@ -57,16 +52,12 @@ namespace JamTemplate.Tower
 
         private void CleanUp()
         {
-            List<Enemy> li = new List<Enemy>();
+            List<Tower> li = new List<Tower>();
 
-            foreach(Enemy e in members)
+            foreach (Tower e in members)
             {
                 if (!e.IsDead())
                     li.Add(e);
-                else
-                {
-                    DeleteCallback.Invoke(e);
-                }
             }
             members = li;
         }
@@ -81,7 +72,7 @@ namespace JamTemplate.Tower
             T.TraceD("cannot set position on GameObjectGroup!");
         }
 
-        public void Add(Enemy go)
+        public void Add(Tower go)
         {
             if (go != null)
             {
@@ -96,7 +87,7 @@ namespace JamTemplate.Tower
         }
 
         public int Count { get { return members.Count; } }
-    
+
 
     }
 }
