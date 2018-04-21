@@ -6,7 +6,7 @@ using System.Text;
 namespace JamUtilities
 {
     /// static only class for "printf debugging"
-    class T
+    public class T
     {
         // print this only in Debug mode
         public static void TraceD(string err)

@@ -55,9 +55,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Score.cs" />
+    <Compile Include="StateTower.cs" />
     <Compile Include="StateIntro.cs" />
     <Compile Include="StateMenu.cs" />
-    <Compile Include="StatePlay.cs" />
+    <Compile Include="StateClicker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

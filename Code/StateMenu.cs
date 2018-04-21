@@ -40,8 +40,7 @@ namespace JamTemplate
             {
                 if (!exiting)
                 {
-                    StatePlay state = new StatePlay();
-                    JamUtilities.Tweens.ShapeAlphaTween.createAlphaTween(_overlay, 255, 0.5f, () => Game.SwitchState(state));
+                    JamUtilities.Tweens.ShapeAlphaTween.createAlphaTween(_overlay, 255, 0.5f, () => Game.SwitchState(Game.clicker));
                     exiting = true;
                 }
                 

@@ -46,7 +46,10 @@ namespace JamTemplate
 
             GP.Window.Closed += new EventHandler(OnClose);
 
-            Game myGame = new Game(new StateIntro());
+            StateIntro i = new StateIntro();
+                
+            Game myGame = new Game(i);
+            i.setNextState(Game.clicker);
             GP.Window.SetView(GP.WindowGameView);
 
             JamUtilities.Mouse.Window = GP.Window;
@@ -65,11 +68,11 @@ namespace JamTemplate
                 }
                 startTime = Environment.TickCount;
 
-                
 
-                
-                
 
+
+
+                Input.Update();
                 myGame.GetInput();
                 if (myGame.CanBeQuit)
                 {

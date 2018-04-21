@@ -34,6 +34,11 @@ namespace JamTemplate
                 nextState = next;
         }
 
+        public void setNextState (GameState next)
+        {
+            nextState = next;
+        }
+        
         public override void Init()
         {
             base.Init();

@@ -14,6 +14,9 @@ namespace JamTemplate
         #region Fields
 
         public static JamUtilities.GameState _state;
+
+        public static StateClicker clicker;
+        public static StateTower tower;
         
         float _timeTilNextInput = 0.0f;
 
@@ -26,7 +29,8 @@ namespace JamTemplate
 
         public Game(GameState s)
         {
-
+            clicker = new StateClicker();
+            tower = new StateTower();
         
             SwitchState(s);
 
@@ -63,6 +67,15 @@ namespace JamTemplate
             {
                 _state.GetInput();            
             }
+
+            if (Input.justPressed[Keyboard.Key.T])
+            {
+                SwitchState(tower);
+            }
+            else if (Input.justPressed[Keyboard.Key.C])
+            {
+                SwitchState(clicker);
+            }
         }
         
         public void Update(float deltaT)
@@ -75,7 +88,7 @@ namespace JamTemplate
             _background.Position =new Vector2f(GP.WindowGameView.Center.X - GP.WindowSize.X/2, GP.WindowGameView.Center.Y  - GP.WindowSize.Y/2);
 
             TimeObject to = Timing.Update(deltaT);
-            Input.Update();
+            
             JamUtilities.Mouse.Update();
             TweenManager.Update(to);
             TimeManager.Update(to);
