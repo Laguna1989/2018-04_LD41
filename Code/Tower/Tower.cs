@@ -49,13 +49,14 @@ namespace JamTemplate.Tower
             tbRate = new TextIconButton("", "../GFX/ic_rt.png", LevelUpRate);
         }
 
+
         private void LevelUpDmg()
         {
             this.Flash(Color.Green, 0.25f);
             T.TraceD("level up DMG");
             Resources.money -= costDamage;
             levelDamage++;
-            costDamage = (long)(2 * Math.Pow(levelDamage, 1.1));
+            costDamage = (long)(2 * Math.Pow(levelDamage, GP.TowerLevelUpCostExponent));
         }
 
 
@@ -66,7 +67,7 @@ namespace JamTemplate.Tower
             Resources.money -= costRange;
             levelRange++;
             range = GP.WorldTileSizeInPixel * (2.5f + 0.45f * levelRange);
-            costRange = (long)(2 * Math.Pow(levelRange, 1.1));
+            costRange = (long)(2 * Math.Pow(levelRange, GP.TowerLevelUpCostExponent));
         }
 
         private void LevelUpRate()
@@ -75,7 +76,7 @@ namespace JamTemplate.Tower
             T.TraceD("level up rt");
             Resources.money -= costRate;
             levelRate++;
-            costRate = (long)(2 * Math.Pow(levelRate, 1.1));
+            costRate = (long)(2 * Math.Pow(levelRate, GP.TowerLevelUpCostExponent));
         }
 
         private void ReloadSprite()
@@ -99,9 +100,9 @@ namespace JamTemplate.Tower
             tbDamage.Update(to);
             tbRange.Update(to);
             tbRate.Update(to);
-            tbDamage.text = "l." + levelDamage + " c " + costDamage;
-            tbRange.text = "l." + levelRange + " c " + costRange;
-            tbRate.text = "l." + levelRate+ " c " + costRate;
+            tbDamage.text = "l." + levelDamage + " c." + costDamage;
+            tbRange.text = "l." + levelRange + " c." + costRange;
+            tbRate.text = "l." + levelRate+ " c." + costRate;
 
             MenuBG.Position = this.Position + new Vector2f(this.Sprite.GetLocalBounds().Width, this.Sprite.GetLocalBounds().Height)
                 + new Vector2f(32, -32);

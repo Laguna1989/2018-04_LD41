@@ -25,7 +25,7 @@ namespace JamTemplate
 
         private Animation castle;
 
-
+        private CloudLayer cl;
         
         public override void Init()
         {
@@ -59,19 +59,23 @@ namespace JamTemplate
             
 
             allShots = new ShotGroup();
-       
+            Add(allShots);
+
             coin = new Animation("../GFX/coin.png", new Vector2u(16, 16));
             coin.SetPosition(new Vector2f(4, 12));
             coin.SetScale(0.75f, 0.75f);
             coin.Add("idle", new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }), 0.125f);
             coin.Play("idle");
-            Add(allShots);
+
+
+            cl = new CloudLayer();
+
         }
 
         public void EnemyDead(Enemy e)
         {
             T.TraceD("i love it when a plan comes together");
-            Resources.money += 2;
+            Resources.money += 1;
         }
 
         public override void Draw(RenderWindow rw)
@@ -87,6 +91,7 @@ namespace JamTemplate
         public override void DrawOverlay(RenderWindow rw)
         {
             base.DrawOverlay(rw);
+            cl.Draw(rw);
             coin.Draw(rw);
             SmartText.DrawText("  " + Resources.money, new Vector2f(10, 0), rw);
             SmartText.DrawText("Lives: " + this.health , new Vector2f(10, 30), rw);
@@ -97,6 +102,7 @@ namespace JamTemplate
             base.Update(to);
             spawnDeadTime -= to.ElapsedGameTime;
 
+            cl.Update(to);
             coin.Update(to);
 
             if (Input.justPressed[Keyboard.Key.N])
