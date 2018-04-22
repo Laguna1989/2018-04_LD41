@@ -45,7 +45,7 @@ namespace JamTemplate
 			research += (int)idleResearchIncome;
 		}
 
-		public static void UpdateMoney()
+		public static void ManualMoneyGain()
 		{
 			money += moneyPerClick;
 		}
@@ -63,7 +63,8 @@ namespace JamTemplate
 				return false;
 		}
 
-		public static Dictionary<ResourceGainer.Type, ResourceGainer> resourceGainers = new Dictionary<ResourceGainer.Type, ResourceGainer>() {
+		public static Dictionary<ResourceGainer.Type, ResourceGainer> resourceGainers = new Dictionary<ResourceGainer.Type, ResourceGainer>()
+		{
 			{ ResourceGainer.Type.Squire, new ResourceGainer(ResourceGainer.Type.Squire) },
 			{ ResourceGainer.Type.Farmer, new ResourceGainer(ResourceGainer.Type.Farmer) },
 			{ ResourceGainer.Type.Knight, new ResourceGainer(ResourceGainer.Type.Knight) },
@@ -71,6 +72,15 @@ namespace JamTemplate
 			{ ResourceGainer.Type.Church, new ResourceGainer(ResourceGainer.Type.Church) },
 			{ ResourceGainer.Type.Gold_Mine, new ResourceGainer(ResourceGainer.Type.Gold_Mine) },
 			{ ResourceGainer.Type.Diamond_Mine, new ResourceGainer(ResourceGainer.Type.Diamond_Mine) }
+		};
+
+		public static Dictionary<Upgrade.Type, Upgrade> upgrades = new Dictionary<Upgrade.Type, Upgrade>()
+		{
+			{ Upgrade.Type.Bronze_Rod, new Upgrade(Upgrade.Type.Bronze_Rod) },
+			{ Upgrade.Type.Silver_Rod, new Upgrade(Upgrade.Type.Silver_Rod) },
+			{ Upgrade.Type.Gold_Rod, new Upgrade(Upgrade.Type.Gold_Rod) },
+			{ Upgrade.Type.Platinum_Rod, new Upgrade(Upgrade.Type.Platinum_Rod) },
+			{ Upgrade.Type.Diamond_Rod, new Upgrade(Upgrade.Type.Diamond_Rod) }
 		};
 
 		public static void UpdateIncomeAmount()

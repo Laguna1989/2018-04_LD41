@@ -13,7 +13,9 @@ namespace JamTemplate
 		public float moneyIncome;
 		public float researchIncome;
 
-		
+		public delegate void Function(int amount);
+		public Function Add;
+
 		public long amount = 0;
 
 		public Type type;
@@ -29,17 +31,22 @@ namespace JamTemplate
 
 		public enum Type
 		{
+			#region Money
 			Squire,
 			Farmer,
 			Knight,
 			Feudal_Lord,
 			Church,
 			Gold_Mine,
-			Diamond_Mine
+			Diamond_Mine,
+			#endregion
+
 		}
 
 		public ResourceGainer(Type type)
 		{
+			this.type = type;
+			Add = add;
 			switch (type)
 			{
 				case Type.Squire:
@@ -90,12 +97,14 @@ namespace JamTemplate
 					moneyIncome = 40;
 					researchIncome = 0;
 					break;
+
+				
 			}
 
 			baseCost = baseCost / 5;
 		}
 
-		public void Add(int amount)
+		private void add(int amount = 1)
 		{
 			long cost = nextCost() * amount;
 			if (Resources.DecreaseMoney(cost))

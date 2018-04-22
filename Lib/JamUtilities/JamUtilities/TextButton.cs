@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,7 +35,18 @@ namespace JamUtilities
             tc = Color.White;
         }
 
-        public virtual void Draw(RenderWindow rw)
+		public TextButton(String t, Action cb, String sprNormalPath, String sprOverPath, String sprPressedPath)
+		{
+			text = t;
+			PressCallback = cb;
+			sprNormal = new Sprite(TextureManager.GetTextureFromFileName(sprNormalPath));
+			sprOver = new Sprite(TextureManager.GetTextureFromFileName(sprOverPath));
+			sprPressed = new Sprite(TextureManager.GetTextureFromFileName(sprPressedPath));
+			sprNormal.Scale = sprOver.Scale = sprPressed.Scale = new Vector2f(2, 2);
+			tc = Color.White;
+		}
+
+		public virtual void Draw(RenderWindow rw)
         {
             if (mode == 0)
                 rw.Draw(sprNormal);

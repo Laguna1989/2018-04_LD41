@@ -11,87 +11,97 @@ namespace JamTemplate
     class StateClicker : JamUtilities.GameState
     {
 
+		//public Animation Coin;
+		//private float animationTime;
 
-		private SmartSprite button;
-		private SmartSprite button2;
+		private bool fistINIT = false;
 
-		private bool buttonPressed;
-        
-        public override void Init()
+		private TextButton gainers_Farmer;
+
+		public override void Init()
         {
             base.Init();
 
-			button = new SmartSprite(new Texture("../GFX/box.png"));
-			button.Position = new Vector2f(GP.WindowSize.X / 2, GP.WindowSize.Y / 2);
+			if (fistINIT == false)
+			{
+				/*
+				Coin = new Animation("../GFX/coin.png", new Vector2u(16, 16));
+				Coin.Add("idle", new List<int>(new int[] { 0 }), 1f);
+				Coin.Add("spin", new List<int>(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }), 0.025f);
 
-			button2 = new SmartSprite(new Texture("../GFX/box.png"));
-			button2.Position = new Vector2f(GP.WindowSize.X / 2, GP.WindowSize.Y / 2 + 64);
-			button2.Sprite.Color = Color.Blue;
+				Coin.Play("idle");
+
+				Coin.Position = new Vector2f(GP.WindowSize.X / 2, 64);
+
+				Add(Coin);
+
+				fistINIT = true;
+				*/
+
+				//gainers_Farmer = new TextButton("Farmer", );
+			}
+
 		}
 
-        public override void Draw(RenderWindow rw)
+		public override void Draw(RenderWindow rw)
         {
             base.Draw(rw);
 			//T.Trace("clicker");
-			
-			DrawUI(rw);
 
-		}
-
-		public override void Update(TimeObject timeObject)
-        {
-            base.Update(timeObject);
-
-			CheckManualButton();
-			CheckManualButton2();
-		}
-
-
-
-
-		private void CheckManualButton()
-		{
-			if (JamUtilities.Mouse.MousePositionInWorld.X > button.Position.X - button.Size.X && JamUtilities.Mouse.MousePositionInWorld.X < button.Position.X + button.Size.X)
-			{
-				if (JamUtilities.Mouse.MousePositionInWorld.Y > button.Position.Y - button.Size.Y && JamUtilities.Mouse.MousePositionInWorld.Y < button.Position.Y + button.Size.Y)
-				{
-					if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left) && buttonPressed == false)
-					{
-						buttonPressed = true;
-
-						Resources.UpdateMoney();
-					}
-					if (!SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left) && buttonPressed == true)
-						buttonPressed = false;
-				}
-			}
-		}
-
-		private void CheckManualButton2()
-		{
-			if (JamUtilities.Mouse.MousePositionInWorld.X > button2.Position.X - button2.Size.X && JamUtilities.Mouse.MousePositionInWorld.X < button2.Position.X + button2.Size.X)
-			{
-				if (JamUtilities.Mouse.MousePositionInWorld.Y > button2.Position.Y - button2.Size.Y && JamUtilities.Mouse.MousePositionInWorld.Y < button2.Position.Y + button2.Size.Y)
-				{
-					if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left) && buttonPressed == false)
-					{
-						buttonPressed = true;
-
-						Resources.resourceGainers[ResourceGainer.Type.Squire].Add(1);
-					}
-					if (!SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left) && buttonPressed == true)
-						buttonPressed = false;
-				}
-			}
-		}
-		private void DrawUI(RenderWindow rw)
-		{
-			rw.Draw(button.Sprite);
-			rw.Draw(button2.Sprite);
+			#region Text
 
 			SmartText.DrawText("Money: " + Resources.money, TextAlignment.LEFT, new Vector2f(5f, 0f), rw);
 			SmartText.DrawText("Money idle income: " + Resources.idleMoneyIncome, TextAlignment.LEFT, new Vector2f(5f, 25f), rw);
 
+			#endregion
+
 		}
+
+		bool animationPlaying = false;
+		public override void Update(TimeObject timeObject)
+        {
+            base.Update(timeObject);
+
+			//if (!SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left) && buttonPressed == true)
+			//	buttonPressed = false;
+
+			//if (MousePressedOverSprite(Coin._sprites[0].Sprite))
+			//{
+			//	Resources.ManualMoneyGain();
+			//	Coin.Play("spin");
+			//	animationPlaying = true;
+			//}
+
+			//if (animationPlaying)
+			//	animationTime += timeObject.ElapsedGameTime;
+			//if(animationPlaying && animationTime >= 0.25f)
+			//{
+			//	Coin.Play("idle");
+			//	animationTime = 0f;
+			//	animationPlaying = false;
+			//}
+		}
+		/*
+		private bool buttonPressed;
+		private bool MousePressedOverSprite(Sprite sprite)
+		{
+			if (JamUtilities.Mouse.MousePositionInWorld.X > sprite.Position.X && JamUtilities.Mouse.MousePositionInWorld.X < sprite.Position.X + 32)
+			{
+				if (JamUtilities.Mouse.MousePositionInWorld.Y > sprite.Position.Y && JamUtilities.Mouse.MousePositionInWorld.Y < sprite.Position.Y + 32)
+				{
+					if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left) && buttonPressed == false)
+					{
+						buttonPressed = true;
+						return true;
+					}
+
+				}
+			}
+
+			return false;
+		}
+		*/
+
+
 	}
 }
