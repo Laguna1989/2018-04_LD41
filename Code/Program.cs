@@ -22,10 +22,15 @@ namespace JamTemplate
 
         static void Main(string[] args)
         {
+#if DEBUG
             GP.Window = new RenderWindow(new VideoMode(800, 600, 32), GP.WindowGameName);
+#else
+            GP.Window = new RenderWindow(new VideoMode(800, 600, 32), GP.WindowGameName,Styles.Fullscreen);
+#endif
             GP.Window.Display();
 
             GP.music = new SFML.Audio.Music("../SFX/LD41OST.ogg");
+            GP.music.Loop = true;
             GP.music.Volume = 60;
             GP.music.Play();
 
