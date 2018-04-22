@@ -30,6 +30,8 @@ namespace JamTemplate
 
         private bool hasBeenInit = false;
 
+        private TextButton siegeButton;
+
         public override void Init()
         {
             if (!hasBeenInit)
@@ -51,7 +53,7 @@ namespace JamTemplate
 
                 allEnemies = new EnemyGroup();
                 allEnemies.DeleteCallback += EnemyDead;
-                SpawnWave();
+                //SpawnWave();
                 Add(allEnemies);
 
 
@@ -64,6 +66,11 @@ namespace JamTemplate
                 allShots = new ShotGroup();
                 Add(allShots);
 
+                siegeButton = new TextButton(" Start Siege", SpawnWave);
+                siegeButton.SetPosition(new Vector2f(400-96, 10));
+                Add(siegeButton);
+
+
                 coin = new Animation("../GFX/coin.png", new Vector2u(16, 16));
                 coin.SetPosition(new Vector2f(4, 11));
                 coin.SetScale(0.75f, 0.75f);
@@ -75,6 +82,8 @@ namespace JamTemplate
                 heart.SetScale(0.75f, 0.75f);
                 heart.Add("idle", new List<int>(new int[] { 0 }),0.125f);
                 heart.Play("idle");
+
+                
 
 #if !DEBUG
             cl = new CloudLayer();
@@ -119,6 +128,9 @@ namespace JamTemplate
 #if !DEBUG
             cl.Update(to);
 #endif
+
+            siegeButton.active = (allEnemies.Count == 0);
+
 
             coin.Update(to);
             heart.Update(to);
