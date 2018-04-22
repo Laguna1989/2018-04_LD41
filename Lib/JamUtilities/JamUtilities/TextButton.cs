@@ -35,14 +35,19 @@ namespace JamUtilities
             tc = Color.White;
         }
 
-		public TextButton(String t, Action cb, String sprNormalPath, String sprOverPath, String sprPressedPath)
+		public TextButton(String t, Action cb, Vector2f scale)
 		{
 			text = t;
 			PressCallback = cb;
-			sprNormal = new Sprite(TextureManager.GetTextureFromFileName(sprNormalPath));
-			sprOver = new Sprite(TextureManager.GetTextureFromFileName(sprOverPath));
-			sprPressed = new Sprite(TextureManager.GetTextureFromFileName(sprPressedPath));
-			sprNormal.Scale = sprOver.Scale = sprPressed.Scale = new Vector2f(2, 2);
+			sprNormal = new Sprite(TextureManager.GetTextureFromFileName("../GFX/btn_normal.png"));
+			sprNormal.Scale = scale;
+
+			sprOver = new Sprite(TextureManager.GetTextureFromFileName("../GFX/btn_over.png"));
+			sprOver.Scale = scale;
+
+			sprPressed = new Sprite(TextureManager.GetTextureFromFileName("../GFX/btn_down.png"));
+			sprPressed.Scale = scale;
+
 			tc = Color.White;
 		}
 
@@ -106,6 +111,16 @@ namespace JamUtilities
         {
             sprNormal.Position = sprOver.Position = sprPressed.Position = newPos;
         }
+
+		public Vector2f getSize()
+		{
+			return new Vector2f(sprNormal.Texture.Size.X * sprNormal.Scale.X, sprNormal.Texture.Size.Y * sprNormal.Scale.Y);
+		}
+
+		public void SetTextOffset(Vector2f offset)
+		{
+			textOffset = offset;
+		}
 
         public virtual void Update(TimeObject to)
         {

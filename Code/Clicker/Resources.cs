@@ -20,6 +20,9 @@ namespace JamTemplate
 
 		public static float idleResearchIncome { get; set; } = 0;
 
+		public static int amountSelected = 1;
+
+
 		public static void UpdateIdleIncome()
 		{
 			UpdateIncomeAmount();

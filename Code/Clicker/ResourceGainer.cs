@@ -13,9 +13,6 @@ namespace JamTemplate
 		public float moneyIncome;
 		public float researchIncome;
 
-		public delegate void Function(int amount);
-		public Function Add;
-
 		public long amount = 0;
 
 		public Type type;
@@ -46,7 +43,6 @@ namespace JamTemplate
 		public ResourceGainer(Type type)
 		{
 			this.type = type;
-			Add = add;
 			switch (type)
 			{
 				case Type.Squire:
@@ -104,8 +100,9 @@ namespace JamTemplate
 			baseCost = baseCost / 5;
 		}
 
-		private void add(int amount = 1)
+		public void Add()
 		{
+			long amount = Resources.amountSelected;
 			long cost = nextCost() * amount;
 			if (Resources.DecreaseMoney(cost))
 			{
