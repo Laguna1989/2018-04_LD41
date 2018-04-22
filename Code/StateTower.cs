@@ -1,4 +1,4 @@
-using JamUtilities;
+﻿using JamUtilities;
 using SFML.Graphics;
 using SFML.Window;
 using System;
@@ -26,6 +26,7 @@ namespace JamTemplate
 
         public int health = 10;
 
+        public bool allowNewSiege = false;
 
         private Animation castle;
 
@@ -82,7 +83,7 @@ namespace JamTemplate
                 Add(notify);
 
 
-                siegeButton = new TextButton(" Start Siege", SpawnWave);
+                siegeButton = new TextButton(" Start Siege", ClickSiegeButton);
                 siegeButton.SetPosition(new Vector2f(400 - 96, 10));
                 Add(siegeButton);
 
@@ -108,9 +109,27 @@ namespace JamTemplate
 
 				Resources.AddCastleHealth = AddCastleHealth;
             }
+<<<<<<< HEAD
 			Resources.castleHealth = health;
 		}
 
+=======
+        }
+
+        private void ClickSiegeButton()
+        {
+            if (allowNewSiege)
+            {
+                allowNewSiege = false;
+                SpawnWave();
+            }
+            else
+            {
+                Game.switchToClicker();
+            }
+        }
+
+>>>>>>> 84169861721dd43325d8d6a1e8ec7cbdd3aab4ca
         private void SpawnTowers()
         {
             allTowers.Add(new Tower.Tower(3, 2, this));
@@ -165,6 +184,10 @@ namespace JamTemplate
             //T.Trace(wave.ToString());
             if (wave >= 2)
                 notify.Alpha = 0;
+
+
+            siegeButton.text = ((allowNewSiege)? " Start Siege!" : " Economics");
+            
 
             siegeButton.active = (allEnemies.Count == 0);
 
@@ -259,9 +282,7 @@ namespace JamTemplate
         {
             if (spawnDeadTime <= 0)
             {
-                //Enemy e = new Enemy(m.allPaths[0], this,  0.85f);
-                //allEnemies.Add(e);
-
+     
                 spawnDeadTime = 1.0f;
                 int count = 3 + 5 * wave;
 
@@ -271,11 +292,13 @@ namespace JamTemplate
                     pathcounter.Add(0);
                 }
 
+                if (count > 45)
+                    count = 45;
                 for (int i = 0; i != count; ++i)
                 {
                     int idx = RandomGenerator.Int(0, m.allPaths.Count);
 
-                    Enemy e = new Enemy(m.allPaths[idx], this, 1.5f + pathcounter[idx] * 0.85f, (float)(Math.Sqrt(wave+1)));
+                    Enemy e = new Enemy(m.allPaths[idx], this, 1.5f + pathcounter[idx] * 0.85f, (float)(Math.Pow(wave+1, 0.65)), 1 + wave/20.0f);
                     allEnemies.Add(e);
                     pathcounter[idx]++;
                 }

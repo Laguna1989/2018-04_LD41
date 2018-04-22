@@ -34,9 +34,9 @@ namespace JamTemplate.Tower
         public TextIconButton tbRange;
         public TextIconButton tbRate;
        
-        private long costDamage = 2; 
-        private long costRate = 2;
+        private long costDamage = 3; 
         private long costRange = 2;
+        private long costRate = 3;
 
         private static SoundBuffer sndbufPowerUp = null;
         private Sound sndPowerUp;
@@ -64,7 +64,7 @@ namespace JamTemplate.Tower
             T.TraceD("level up DMG");
             Resources.money -= costDamage;
             levelDamage++;
-            costDamage = (long)(2 * Math.Pow(levelDamage, GP.TowerLevelUpCostExponent));
+            costDamage = (long)(3 * Math.Pow(levelDamage, GP.TowerLevelUpCostExponent));
             sndPowerUp.Play();
 
         }
@@ -87,7 +87,7 @@ namespace JamTemplate.Tower
             T.TraceD("level up rt");
             Resources.money -= costRate;
             levelRate++;
-            costRate = (long)(2 * Math.Pow(levelRate, GP.TowerLevelUpCostExponent));
+            costRate = (long)(3 * Math.Pow(levelRate, GP.TowerLevelUpCostExponent));
             sndPowerUp.Play();
         }
 

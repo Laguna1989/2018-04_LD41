@@ -79,24 +79,37 @@ namespace JamTemplate
                 _state.GetInput();            
             }
 
+#if DEBUG
             if (Input.justPressed[Keyboard.Key.T])
             {
-                if (_state == clicker)
-                {
-                    SwitchState(tower);
-                    //_state = tower;
-                }
+                switchToTower();
             }
             else if (Input.justPressed[Keyboard.Key.C])
             {
-                if (_state == tower)
-                {
-                    SwitchState(clicker);
-                    //_state = clicker;
-                }
+                switchToClicker();
+            }
+#endif
+        }
+
+        public static void switchToClicker()
+        {
+            if (_state == tower)
+            {
+                SwitchState(clicker);
+                //_state = clicker;
             }
         }
-        
+
+        public static void switchToTower()
+        {
+            if (_state == clicker)
+            {
+                tower.allowNewSiege = true;
+                SwitchState(tower);
+                //_state = tower;
+            }
+        }
+
         public void Update(float deltaT)
         {
             if (_timeTilNextInput >= 0.0f)
@@ -116,7 +129,7 @@ namespace JamTemplate
             CanBeQuit = false;
 
 			#region Clicker
-			clickerTimer += deltaT;
+			clickerTimer += deltaT * ((_state == tower) ? 0.125f : 1.0f);
 
 			if(clickerTimer >= Resources.INCOME_TICK)
 			{

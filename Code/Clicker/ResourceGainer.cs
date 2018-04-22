@@ -17,6 +17,8 @@ namespace JamTemplate
 
 		public Type type;
 
+        public static float totalBuildingsBuilt { get; set; } = 0;
+
 		public long nextCost()
 		{
 			long value = 0;
@@ -97,7 +99,7 @@ namespace JamTemplate
 					break;
 
 				case Type.Alchemy_Lab:
-					baseCost = 5000;
+					baseCost = 300;
 
 					moneyIncome = 0;
 					researchIncome = 1;
@@ -111,11 +113,14 @@ namespace JamTemplate
 
 		public void Add()
 		{
+
 			long amount = Resources.amountSelected;
 			long cost = nextCost() * amount;
 			if (Resources.DecreaseMoney(cost))
 			{
-				this.amount += amount;
+                totalBuildingsBuilt++;
+
+                this.amount += amount;
 				Console.WriteLine(string.Format("Added {0} of {1} at the price of {2}", amount, type, cost));
 			}
 			else
