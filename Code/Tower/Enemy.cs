@@ -1,4 +1,5 @@
 ﻿using JamUtilities;
+using SFML.Audio;
 using SFML.Graphics;
 using SFML.Window;
 using System;
@@ -23,6 +24,12 @@ namespace JamTemplate.Tower
         private float freezeTimer = 0;
         private Vector2f oldVelocity = new Vector2f(0, 0);
 
+        static private SoundBuffer sndbufHit1 = null;
+        static private SoundBuffer sndbufHit2 = null;
+        static private SoundBuffer sndbufHit3 = null;
+
+        private Sound sndHit;
+
         public Enemy (Path pa, StateTower  s, float delay = 0, float level = 1.0f) : base("../GFX/enemy.png", new Vector2u(16,16))
         {
             p = pa;
@@ -34,9 +41,23 @@ namespace JamTemplate.Tower
             Origin = new Vector2f(8,8);
 
             health *= level;
-
+            
             Position = new Vector2f(p.start.X * GP.WorldTileSizeInPixel + 14, p.start.Y * GP.WorldTileSizeInPixel + 8);
             startDelay = delay;
+
+            if (sndbufHit1 == null)
+            {
+                sndbufHit1 = new SoundBuffer("../SFX/hit1.wav");
+                sndbufHit2 = new SoundBuffer("../SFX/hit2.wav");
+                sndbufHit3 = new SoundBuffer("../SFX/hit3.wav");
+            }
+            int idx = RandomGenerator.Int(0, 3);
+            if (idx == 0)
+                sndHit = new Sound(sndbufHit1);
+            else if (idx == 1)
+                sndHit = new Sound(sndbufHit2);
+            else
+                sndHit = new Sound(sndbufHit3);
         }
 
         public override bool IsDead()
@@ -158,8 +179,12 @@ namespace JamTemplate.Tower
         {
             Flash(Color.Red, 0.25f);
             health -= dmg;
+
+            sndHit.Play();
+
             if (health <= 0)
                 alive = false;
+
             //T.Trace(health.ToString());   
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SFML.Graphics;
 using SFML.Window;
+using SFML.Audio;
 
 namespace JamUtilities
 {
@@ -24,6 +25,9 @@ namespace JamUtilities
 
         protected Vector2f textOffset = new Vector2f(5, 5);
 
+        static private SoundBuffer sndbufClick = null;
+        private Sound sndClick;
+
         public TextButton(String t, Action cb)
         {
             text = t;
@@ -33,6 +37,10 @@ namespace JamUtilities
             sprPressed = new Sprite(TextureManager.GetTextureFromFileName("../GFX/btn_down.png"));
             sprNormal.Scale = sprOver.Scale = sprPressed.Scale = new Vector2f(2, 2);
             tc = Color.White;
+
+            if (sndbufClick == null)
+                sndbufClick = new SoundBuffer("../SFX/click.wav");
+            sndClick = new Sound(sndbufClick);
         }
 
 		public TextButton(String t, Action cb, String sprNormalPath, String sprOverPath, String sprPressedPath)
@@ -73,7 +81,12 @@ namespace JamUtilities
                 if (mode == 1 && Mouse.justReleased)
                 {
                     if (PressCallback != null)
-                        PressCallback();                    
+                    {
+                        PressCallback();
+                        sndClick.Play();
+                    }
+
+                        
                 }
                 
             }

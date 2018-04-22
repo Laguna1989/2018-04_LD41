@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SFML.Graphics;
+using SFML.Audio;
 
 namespace JamUtilities
 {
@@ -28,6 +29,9 @@ namespace JamUtilities
         public static float ShotDamageBase { get; set; } = 0.5f;
         
         public static float ShotMaxLifeTime { get; set; } = 2.5f;
+
+        public static Music music { get; set; }
+        
 
     }
 }

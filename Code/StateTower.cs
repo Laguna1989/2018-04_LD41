@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JamTemplate.Tower;
+using SFML.Audio;
 
 namespace JamTemplate
 {
@@ -32,6 +33,9 @@ namespace JamTemplate
 
         private TextButton siegeButton;
 
+        private SoundBuffer sndbufLoose;
+        private Sound sndLoose;
+
         public override void Init()
         {
             if (!hasBeenInit)
@@ -56,13 +60,9 @@ namespace JamTemplate
                 //SpawnWave();
                 Add(allEnemies);
 
-
-
                 castle = new Castle();
                 Add(castle);
-
-
-
+                
                 allShots = new ShotGroup();
                 Add(allShots);
 
@@ -82,6 +82,9 @@ namespace JamTemplate
                 heart.SetScale(0.75f, 0.75f);
                 heart.Add("idle", new List<int>(new int[] { 0 }),0.125f);
                 heart.Play("idle");
+
+                sndbufLoose = new SoundBuffer("../SFX/loose.wav");
+                sndLoose = new Sound(sndbufLoose);
 
                 
 
@@ -236,8 +239,11 @@ namespace JamTemplate
             allShots.Add(s);
         }
 
+
         public void looseLife ()
         {
+            sndLoose.Play();
+
             health--;
             Color c = Color.Red;
             c.A = 200;

@@ -25,6 +25,10 @@ namespace JamTemplate
             GP.Window = new RenderWindow(new VideoMode(800, 600, 32), GP.WindowGameName);
             GP.Window.Display();
 
+            GP.music = new SFML.Audio.Music("../SFX/LD41OST.flac");
+            GP.music.Volume = 60;
+            GP.music.Play();
+
             try
             {
                 SmartText._font = new Font("../GFX/font.ttf");
