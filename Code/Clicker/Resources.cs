@@ -74,7 +74,8 @@ namespace JamTemplate
 			{ ResourceGainer.Type.Feudal_Lord, new ResourceGainer(ResourceGainer.Type.Feudal_Lord) },
 			{ ResourceGainer.Type.Church, new ResourceGainer(ResourceGainer.Type.Church) },
 			{ ResourceGainer.Type.Gold_Mine, new ResourceGainer(ResourceGainer.Type.Gold_Mine) },
-			{ ResourceGainer.Type.Diamond_Mine, new ResourceGainer(ResourceGainer.Type.Diamond_Mine) }
+			{ ResourceGainer.Type.Diamond_Mine, new ResourceGainer(ResourceGainer.Type.Diamond_Mine) },
+			{ ResourceGainer.Type.Alchemy_Lab, new ResourceGainer(ResourceGainer.Type.Alchemy_Lab) }
 		};
 
 		public static Dictionary<Upgrade.Type, Upgrade> upgrades = new Dictionary<Upgrade.Type, Upgrade>()

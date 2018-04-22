@@ -38,6 +38,8 @@ namespace JamTemplate
 			Diamond_Mine,
 			#endregion
 
+			Alchemy_Lab
+
 		}
 
 		public ResourceGainer(Type type)
@@ -94,7 +96,14 @@ namespace JamTemplate
 					researchIncome = 0;
 					break;
 
-				
+				case Type.Alchemy_Lab:
+					baseCost = 5000;
+
+					moneyIncome = 0;
+					researchIncome = 1;
+					break;
+
+
 			}
 
 			baseCost = baseCost / 5;

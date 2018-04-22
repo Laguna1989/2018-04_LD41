@@ -49,13 +49,13 @@ namespace JamTemplate
 				amount10 = new TextButton("10", selectAmount10, new Vector2f(0.75f, 1.5f));
 				amount100 = new TextButton("100", selectAmount100, new Vector2f(0.75f, 1.5f));
 
-				amount1.SetPosition(new Vector2f(GP.WindowSize.X - amount100.getSize().X - 2.5f - amount10.getSize().X - 2.5f - amount1.getSize().X - 2.5f, 2.5f));
+				amount1.SetPosition(new Vector2f(GP.WindowSize.X - amount100.getSize().X - 2.5f - amount10.getSize().X - 2.5f - amount1.getSize().X - 2.5f - 15f, 2.5f));
 				amount1.SetTextOffset(new Vector2f(15f, -3f));
 
-				amount10.SetPosition(new Vector2f(GP.WindowSize.X - amount100.getSize().X - 2.5f - amount10.getSize().X - 2.5f, 2.5f));
+				amount10.SetPosition(new Vector2f(GP.WindowSize.X - amount100.getSize().X - 2.5f - amount10.getSize().X - 2.5f - 15f, 2.5f));
 				amount10.SetTextOffset(new Vector2f(15f, -3f));
 
-				amount100.SetPosition(new Vector2f(GP.WindowSize.X - amount100.getSize().X - 2.5f, 2.5f));
+				amount100.SetPosition(new Vector2f(GP.WindowSize.X - amount100.getSize().X - 2.5f - 15f, 2.5f));
 				amount100.SetTextOffset(new Vector2f(15f, -3f));
 
 
@@ -66,26 +66,27 @@ namespace JamTemplate
 				Add(amount100);
 				#endregion
 
-				float rightWidth = -(GP.WindowSize.X - amount100.getSize().X - 2.5f - amount10.getSize().X - 2.5f - amount1.getSize().X - 2.5f - GP.WindowSize.X);
+				float rightWidth = -(GP.WindowSize.X - amount100.getSize().X - 2.5f - amount10.getSize().X - 2.5f - amount1.getSize().X - 2.5f - GP.WindowSize.X) + 25f;
 				float rightHeight = GP.WindowSize.Y - 2.5f - amount1.getSize().Y - 50f;
 
 
 				#region Resource Gainers
 
-				Vector2f resourceGainerScale = new Vector2f(2.25f, 2.25f);
+				Vector2f resourceGainerScale = new Vector2f(2.6f, 3f);
+				Vector2f resourceGainerTextOffset = new Vector2f(50f, 0f);
 
-				resourceGainers.Add(new TextButton("Squire", Resources.resourceGainers[ResourceGainer.Type.Squire].Add, resourceGainerScale));
-				resourceGainers.Add(new TextButton("Farmer", Resources.resourceGainers[ResourceGainer.Type.Farmer].Add, resourceGainerScale));
-				resourceGainers.Add(new TextButton("Knight", Resources.resourceGainers[ResourceGainer.Type.Knight].Add, resourceGainerScale));
-				resourceGainers.Add(new TextButton("Feudal Lord", Resources.resourceGainers[ResourceGainer.Type.Feudal_Lord].Add, resourceGainerScale));
-				resourceGainers.Add(new TextButton("Church", Resources.resourceGainers[ResourceGainer.Type.Church].Add, resourceGainerScale));
-				resourceGainers.Add(new TextButton("Gold Mine", Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].Add, resourceGainerScale));
-				resourceGainers.Add(new TextButton("Diamond Mine", Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].Add, resourceGainerScale));
+				resourceGainers.Add(new TextIconButton("Squire", "../GFX/ic_squire.png", Resources.resourceGainers[ResourceGainer.Type.Squire].Add, resourceGainerScale, resourceGainerTextOffset));
+				resourceGainers.Add(new TextIconButton("Farmer", "../GFX/ic_farmer.png", Resources.resourceGainers[ResourceGainer.Type.Farmer].Add, resourceGainerScale, resourceGainerTextOffset));
+				resourceGainers.Add(new TextIconButton("Knight", "../GFX/ic_knight.png", Resources.resourceGainers[ResourceGainer.Type.Knight].Add, resourceGainerScale, resourceGainerTextOffset));
+				resourceGainers.Add(new TextIconButton("Feudal Lord", "../GFX/ic_lord.png", Resources.resourceGainers[ResourceGainer.Type.Feudal_Lord].Add, resourceGainerScale, resourceGainerTextOffset));
+				resourceGainers.Add(new TextIconButton("Church", "../GFX/ic_priest.png", Resources.resourceGainers[ResourceGainer.Type.Church].Add, resourceGainerScale, resourceGainerTextOffset));
+				resourceGainers.Add(new TextIconButton("Gold Mine", "../GFX/ic_miner_gold.png", Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].Add, resourceGainerScale, resourceGainerTextOffset));
+				resourceGainers.Add(new TextIconButton("Diamond Mine", "../GFX/ic_miner_diamond.png", Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].Add, resourceGainerScale, resourceGainerTextOffset));
 
 				for (int i = 1; i < 8; i++)
 				{
-					resourceGainers[i - 1].SetPosition(new Vector2f(GP.WindowSize.X - rightWidth, (rightHeight / 7 - 15f) * i - 15f));
-					resourceGainers[i - 1].SetTextOffset(new Vector2f(7.5f, 5f));
+					resourceGainers[i - 1].SetPosition(new Vector2f(GP.WindowSize.X - rightWidth, (rightHeight / 7 ) * i - 15f));
+					//resourceGainers[i - 1].SetTextOffset(new Vector2f(7.5f, 5f));
 
 					Add(resourceGainers[i - 1]);
 				}
@@ -111,6 +112,13 @@ namespace JamTemplate
 
 			#endregion
 
+			resourceGainers[0].text = "Squire\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Squire].nextCost() * Resources.amountSelected + "G";
+			resourceGainers[1].text = "Farmer\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Farmer].nextCost() * Resources.amountSelected + "G";
+			resourceGainers[2].text = "Knight\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Knight].nextCost() * Resources.amountSelected + "G";
+			resourceGainers[3].text = "Feudal Lord\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Feudal_Lord].nextCost() + "G";
+			resourceGainers[4].text = "Church\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Church].nextCost() * Resources.amountSelected + "G";
+			resourceGainers[5].text = "Gold Mine\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].nextCost() * Resources.amountSelected + "G";
+			resourceGainers[6].text = "Diamond Mine\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].nextCost() * Resources.amountSelected + "G";
 		}
 
 		bool animationPlaying = false;
