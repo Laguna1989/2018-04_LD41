@@ -80,7 +80,7 @@ namespace JamTemplate
                 heart = new Animation("../GFX/heart.png", new Vector2u(16, 16));
                 heart.SetPosition(new Vector2f(4, 46));
                 heart.SetScale(0.75f, 0.75f);
-                heart.Add("idle", new List<int>(new int[] { 0 }),0.125f);
+                heart.Add("idle", new List<int>(new int[] { 0,1,2,3 }),0.125f);
                 heart.Play("idle");
 
                 sndbufLoose = new SoundBuffer("../SFX/loose.wav");
