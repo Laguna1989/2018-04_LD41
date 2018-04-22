@@ -31,6 +31,7 @@ namespace JamTemplate.Tower
 
 
             SetPosition(t.GetPosition() + new Vector2f(16,16));
+            Origin = new Vector2f(16, 16);
 
             float tx = t.GetPosition().X;
             float ty = t.GetPosition().Y;

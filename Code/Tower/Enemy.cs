@@ -23,7 +23,7 @@ namespace JamTemplate.Tower
         private float freezeTimer = 0;
         private Vector2f oldVelocity = new Vector2f(0, 0);
 
-        public Enemy (Path pa, StateTower  s, float delay = 0) : base("../GFX/enemy.png", new Vector2u(16,16))
+        public Enemy (Path pa, StateTower  s, float delay = 0, float level = 1.0f) : base("../GFX/enemy.png", new Vector2u(16,16))
         {
             p = pa;
             state = s;
@@ -32,6 +32,8 @@ namespace JamTemplate.Tower
             Add("walkT", new List<int>(new int[] { 8, 9, 10, 11 }), 0.25f);
             Play("walkB");
             Origin = new Vector2f(8,8);
+
+            health *= level;
 
             Position = new Vector2f(p.start.X * GP.WorldTileSizeInPixel + 14, p.start.Y * GP.WorldTileSizeInPixel + 8);
             startDelay = delay;

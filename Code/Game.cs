@@ -34,8 +34,10 @@ namespace JamTemplate
         public Game(GameState s)
         {
             clicker = new StateClicker();
+            //SwitchState(clicker);
             tower = new StateTower();
-        
+            //SwitchState(tower);
+
             SwitchState(s);
 
             JamUtilities.Palette.LoadPalette("../GFX/gustav.scss");
@@ -74,11 +76,19 @@ namespace JamTemplate
 
             if (Input.justPressed[Keyboard.Key.T])
             {
-                SwitchState(tower);
+                if (_state == clicker)
+                {
+                    SwitchState(tower);
+                    //_state = tower;
+                }
             }
             else if (Input.justPressed[Keyboard.Key.C])
             {
-                SwitchState(clicker);
+                if (_state == tower)
+                {
+                    SwitchState(clicker);
+                    //_state = clicker;
+                }
             }
         }
         
@@ -121,7 +131,6 @@ namespace JamTemplate
 
             ScreenEffects.GetStaticEffect("vignette").Draw(rw);
             _state.DrawOverlay(rw);
-            
         }
 
 

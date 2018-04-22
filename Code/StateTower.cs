@@ -18,6 +18,7 @@ namespace JamTemplate
         public float spawnDeadTime = 0;
 
         private Animation coin;
+        private Animation heart;
 
         public int wave = 1;
 
@@ -26,47 +27,59 @@ namespace JamTemplate
         private Animation castle;
 
         private CloudLayer cl;
-        
+
+        private bool hasBeenInit = false;
+
         public override void Init()
         {
-            base.Init();
-            m = new Map();
-            Add(m);
+            if (!hasBeenInit)
+            {
+                hasBeenInit = true;
+                base.Init();
+                m = new Map();
+                Add(m);
 
-            allTowers = new TowerGroup();
-            Add(allTowers);
+                allTowers = new TowerGroup();
+                Add(allTowers);
 
-            allTowers.Add(new Tower.Tower(3, 2, this));
-            allTowers.Add(new Tower.Tower(6, 6, this));
-            allTowers.Add(new Tower.Tower(8, 12, this));
+                allTowers.Add(new Tower.Tower(3, 2, this));
+                allTowers.Add(new Tower.Tower(6, 6, this));
+                allTowers.Add(new Tower.Tower(8, 12, this));
 
-            allTowers.Add(new Tower.Tower(11, 12, this));
-
-
-            allEnemies = new EnemyGroup();
-            allEnemies.DeleteCallback += EnemyDead;
-            SpawnWave();
-            Add(allEnemies);
+                allTowers.Add(new Tower.Tower(11, 12, this));
 
 
+                allEnemies = new EnemyGroup();
+                allEnemies.DeleteCallback += EnemyDead;
+                SpawnWave();
+                Add(allEnemies);
 
-            castle = new Castle();
-            Add(castle);
 
-            
 
-            allShots = new ShotGroup();
-            Add(allShots);
+                castle = new Castle();
+                Add(castle);
 
-            coin = new Animation("../GFX/coin.png", new Vector2u(16, 16));
-            coin.SetPosition(new Vector2f(4, 12));
-            coin.SetScale(0.75f, 0.75f);
-            coin.Add("idle", new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }), 0.125f);
-            coin.Play("idle");
+
+
+                allShots = new ShotGroup();
+                Add(allShots);
+
+                coin = new Animation("../GFX/coin.png", new Vector2u(16, 16));
+                coin.SetPosition(new Vector2f(4, 11));
+                coin.SetScale(0.75f, 0.75f);
+                coin.Add("idle", new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }), 0.125f);
+                coin.Play("idle");
+
+                heart = new Animation("../GFX/heart.png", new Vector2u(16, 16));
+                heart.SetPosition(new Vector2f(4, 46));
+                heart.SetScale(0.75f, 0.75f);
+                heart.Add("idle", new List<int>(new int[] { 0 }),0.125f);
+                heart.Play("idle");
 
 #if !DEBUG
             cl = new CloudLayer();
 #endif
+            }
         }
 
         public void EnemyDead(Enemy e)
@@ -93,8 +106,9 @@ namespace JamTemplate
             cl.Draw(rw);
 #endif
             coin.Draw(rw);
+            heart.Draw(rw);
             SmartText.DrawText("  " + Resources.money, new Vector2f(10, 0), rw);
-            SmartText.DrawText("Lives: " + this.health , new Vector2f(10, 30), rw);
+            SmartText.DrawText("  " + this.health , new Vector2f(10, 36), rw);
         }
 
         public override void Update(TimeObject to)
@@ -107,7 +121,7 @@ namespace JamTemplate
 #endif
 
             coin.Update(to);
-
+            heart.Update(to);
             if (Input.justPressed[Keyboard.Key.N])
             {
                 Input.justPressed[Keyboard.Key.N] = false;
@@ -194,7 +208,7 @@ namespace JamTemplate
                 {
                     int idx = RandomGenerator.Int(0, m.allPaths.Count);
 
-                    Enemy e = new Enemy(m.allPaths[idx], this, 1.5f + pathcounter[idx] * 0.85f);
+                    Enemy e = new Enemy(m.allPaths[idx], this, 1.5f + pathcounter[idx] * 0.85f, (float)(Math.Sqrt(wave+1)));
                     allEnemies.Add(e);
                     pathcounter[idx]++;
                 }

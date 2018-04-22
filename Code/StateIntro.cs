@@ -22,7 +22,7 @@ namespace JamTemplate
         private float _age;
         private float _introTime = 2.75f;    // 1 second fade in, 0.5 second stay, 1 second fade out
         
-        public GameState nextState = new StateMenu();
+        public GameState nextState = null;
         private bool ending = false;
 
 

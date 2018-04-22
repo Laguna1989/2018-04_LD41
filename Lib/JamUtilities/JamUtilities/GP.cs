@@ -20,13 +20,13 @@ namespace JamUtilities
 
         public static float EnemyMoveTimerMax { get; set; } = 0.75f;
 
-        public static float TowerReloadTime { get; set; } = 4.05f;
-        //public static float TowerReloadTime { get; set; } = 1.05f;
+        public static float TowerReloadTime { get; set; } = 2.05f;
+        
         public static float TowerLevelUpCostExponent { get; set; } = 1.2f;
 
         public static float ShotSpeed { get; set; } = 200;
-        //public static float ShotDamageBase { get; set; } = 0.5f;
-        public static float ShotDamageBase { get; set; } = 0.005f;
+        public static float ShotDamageBase { get; set; } = 0.5f;
+        
         public static float ShotMaxLifeTime { get; set; } = 2.5f;
 
     }

@@ -48,7 +48,8 @@ namespace JamTemplate
             StateIntro i = new StateIntro();
                 
             Game myGame = new Game(i);
-            i.setNextState(Game.clicker);
+            i.setNextState(new StateMenu());
+
             GP.Window.SetView(GP.WindowGameView);
 
             JamUtilities.Mouse.Window = GP.Window;
