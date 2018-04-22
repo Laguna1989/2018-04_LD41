@@ -26,8 +26,8 @@ namespace JamUtilities
             //layer3.Scale = new Vector2f(3, 3);
 
 
-            layer1.Color = new Color(255, 255, 255, 20);
-            layer2.Color = new Color(255, 255, 255, 20);
+            layer1.Color = new Color(255, 255, 255, 40);
+            layer2.Color = new Color(255, 255, 255, 40);
             //layer3.Color = new Color(255, 255, 255, 20);
         }
 

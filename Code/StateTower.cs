@@ -36,6 +36,15 @@ namespace JamTemplate
         private SoundBuffer sndbufLoose;
         private Sound sndLoose;
 
+
+        public void Preload()
+        {
+#if !DEBUG
+            cl = new CloudLayer();
+#endif
+            castle = new Castle();
+        }
+
         public override void Init()
         {
             if (!hasBeenInit)
@@ -60,7 +69,7 @@ namespace JamTemplate
                 //SpawnWave();
                 Add(allEnemies);
 
-                castle = new Castle();
+                
                 Add(castle);
                 
                 allShots = new ShotGroup();
@@ -80,7 +89,7 @@ namespace JamTemplate
                 heart = new Animation("../GFX/heart.png", new Vector2u(16, 16));
                 heart.SetPosition(new Vector2f(4, 46));
                 heart.SetScale(0.75f, 0.75f);
-                heart.Add("idle", new List<int>(new int[] { 0,1,2,3 }),0.125f);
+                heart.Add("idle", new List<int>(new int[] { 0,1,2,3 }),0.127f);
                 heart.Play("idle");
 
                 sndbufLoose = new SoundBuffer("../SFX/loose.wav");
@@ -88,9 +97,7 @@ namespace JamTemplate
 
                 
 
-#if !DEBUG
-            cl = new CloudLayer();
-#endif
+
             }
         }
 
@@ -137,13 +144,13 @@ namespace JamTemplate
 
             coin.Update(to);
             heart.Update(to);
-            if (Input.justPressed[Keyboard.Key.N])
-            {
-                Input.justPressed[Keyboard.Key.N] = false;
-                Input.pressed[Keyboard.Key.N] = false;
+            //if (Input.justPressed[Keyboard.Key.N])
+            //{
+            //    Input.justPressed[Keyboard.Key.N] = false;
+            //    Input.pressed[Keyboard.Key.N] = false;
 
-                SpawnWave();
-            }
+            //    SpawnWave();
+            //}
                 
 
             foreach(Shot s in allShots)

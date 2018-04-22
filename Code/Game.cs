@@ -36,11 +36,6 @@ namespace JamTemplate
             clicker = new StateClicker();
             //SwitchState(clicker);
             tower = new StateTower();
-            //SwitchState(tower);
-
-            SwitchState(s);
-
-            JamUtilities.Palette.LoadPalette("../GFX/gustav.scss");
 
 
             SmartSprite._scaleVector = new Vector2f(2.0f, 2.0f);
@@ -48,6 +43,16 @@ namespace JamTemplate
             GP.WindowGameView = new View(new FloatRect(0, 0, GP.WindowSize.X, GP.WindowSize.Y));
             ParticleManager.SetPositionRect(new FloatRect(-500, 0, 1400, 600));
             //ParticleManager.Gravity = GameProperties.GravitationalAcceleration;
+
+            tower.Preload();
+            //SwitchState(tower);
+
+            SwitchState(s);
+
+            JamUtilities.Palette.LoadPalette("../GFX/gustav.scss");
+
+
+            
 
 
 
