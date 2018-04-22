@@ -36,11 +36,6 @@ namespace JamTemplate
             clicker = new StateClicker();
             //SwitchState(clicker);
             tower = new StateTower();
-            //SwitchState(tower);
-
-            SwitchState(s);
-
-            JamUtilities.Palette.LoadPalette("../GFX/gustav.scss");
 
 
             SmartSprite._scaleVector = new Vector2f(2.0f, 2.0f);
@@ -48,6 +43,16 @@ namespace JamTemplate
             GP.WindowGameView = new View(new FloatRect(0, 0, GP.WindowSize.X, GP.WindowSize.Y));
             ParticleManager.SetPositionRect(new FloatRect(-500, 0, 1400, 600));
             //ParticleManager.Gravity = GameProperties.GravitationalAcceleration;
+
+            tower.Preload();
+            //SwitchState(tower);
+
+            SwitchState(s);
+
+            JamUtilities.Palette.LoadPalette("../GFX/gustav.scss");
+
+
+            
 
 
 
@@ -58,8 +63,8 @@ namespace JamTemplate
             {
                 SmartText._font = new Font("../GFX/font.ttf");
 
-                SmartText._lineLengthInChars = 18;
-                SmartText._lineSpread = 1.2f;
+                SmartText._lineLengthInChars = 120;
+                SmartText._lineSpread = 1.4f;
             }
             catch (Exception e)
             {

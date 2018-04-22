@@ -31,7 +31,7 @@ namespace JamUtilities.ScreenEffects
                 for (uint j = 0; j != _screenSize.Y; j++)
                 {
                     Vector2u distanceToCenter = new Vector2u(centerPosition.X - i, centerPosition.Y - j);
-                    float newAlpha = 255.0f * 0.75f * (float)Math.Sqrt(distanceToCenter.X * distanceToCenter.X + distanceToCenter.Y * distanceToCenter.Y) / distanceToCenterMax;
+                    float newAlpha = 255.0f * 0.65f * (float)Math.Sqrt(distanceToCenter.X * distanceToCenter.X + distanceToCenter.Y * distanceToCenter.Y) / distanceToCenterMax;
                     newCol.A = (byte)newAlpha;
                     fadeRadialImage.SetPixel(i, j, newCol);
                 }

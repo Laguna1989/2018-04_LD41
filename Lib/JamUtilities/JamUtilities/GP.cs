@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SFML.Graphics;
+using SFML.Audio;
 
 namespace JamUtilities
 {
@@ -13,7 +14,7 @@ namespace JamUtilities
         public static View WindowGameView { get; set; } = null;
         public static Vector2u WindowSize { get { return Window.Size; } }
 
-        public static string WindowGameName { get; private set; } = "$GameTitle$";
+        public static string WindowGameName { get; private set; } = "Grantchester Meadows";
 
         public static int WorldTileSizeInPixel { get; set; } = 32;
 
@@ -28,6 +29,9 @@ namespace JamUtilities
         public static float ShotDamageBase { get; set; } = 0.5f;
         
         public static float ShotMaxLifeTime { get; set; } = 2.5f;
+
+        public static Music music { get; set; }
+        
 
     }
 }

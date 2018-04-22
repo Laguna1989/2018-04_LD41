@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SFML.Graphics;
+using SFML.Audio;
 
 namespace JamTemplate.Tower
 {
@@ -32,10 +33,13 @@ namespace JamTemplate.Tower
         public TextIconButton tbDamage;
         public TextIconButton tbRange;
         public TextIconButton tbRate;
-
+       
         private long costDamage = 2; 
         private long costRate = 2;
         private long costRange = 2;
+
+        private static SoundBuffer sndbufPowerUp = null;
+        private Sound sndPowerUp;
 
         public Tower (int x, int y, StateTower s) : base ("../GFX/tower.png")
         {
@@ -47,6 +51,10 @@ namespace JamTemplate.Tower
             tbDamage = new TextIconButton("","../GFX/ic_dmg.png", LevelUpDmg);
             tbRange = new TextIconButton("", "../GFX/ic_rng.png", LevelUpRange);
             tbRate = new TextIconButton("", "../GFX/ic_rt.png", LevelUpRate);
+
+            if (sndbufPowerUp == null)
+                sndbufPowerUp = new SoundBuffer("../SFX/powerup.wav");
+            sndPowerUp = new Sound(sndbufPowerUp);
         }
 
 
@@ -57,6 +65,8 @@ namespace JamTemplate.Tower
             Resources.money -= costDamage;
             levelDamage++;
             costDamage = (long)(2 * Math.Pow(levelDamage, GP.TowerLevelUpCostExponent));
+            sndPowerUp.Play();
+
         }
 
 
@@ -68,6 +78,7 @@ namespace JamTemplate.Tower
             levelRange++;
             range = GP.WorldTileSizeInPixel * (2.5f + 0.45f * levelRange);
             costRange = (long)(2 * Math.Pow(levelRange, GP.TowerLevelUpCostExponent));
+            sndPowerUp.Play();
         }
 
         private void LevelUpRate()
@@ -77,6 +88,7 @@ namespace JamTemplate.Tower
             Resources.money -= costRate;
             levelRate++;
             costRate = (long)(2 * Math.Pow(levelRate, GP.TowerLevelUpCostExponent));
+            sndPowerUp.Play();
         }
 
         private void ReloadSprite()

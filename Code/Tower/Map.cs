@@ -59,7 +59,7 @@ namespace JamTemplate.Tower
                 p.Add(Path.Dir.B, 3);
                 p.Add(Path.Dir.L, 2);
                 p.Add(Path.Dir.B, 3);
-                p.Add(Path.Dir.R, 9);
+                p.Add(Path.Dir.R, 11);
                 p.Add(Path.Dir.T, 2);
 
                 allPaths.Add(p);
