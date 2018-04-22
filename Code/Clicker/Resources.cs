@@ -24,6 +24,9 @@ namespace JamTemplate
 
 		public static int castleHealth = 10;
 
+		public delegate void addCaslteHealth(int amount);
+		public static addCaslteHealth AddCastleHealth;
+
 
 		public static void UpdateIdleIncome()
 		{

@@ -106,9 +106,10 @@ namespace JamTemplate
 
 
 
-
+				Resources.AddCastleHealth = AddCastleHealth;
             }
-        }
+			Resources.castleHealth = health;
+		}
 
         private void SpawnTowers()
         {
@@ -150,8 +151,6 @@ namespace JamTemplate
         public override void Update(TimeObject to)
         {
             base.Update(to);
-
-			Resources.castleHealth = health;
 
 
             spawnDeadTime -= to.ElapsedGameTime;
@@ -302,5 +301,11 @@ namespace JamTemplate
             c.A = 200;
             castle.Flash(c, 0.75f);
         }
+
+		private void AddCastleHealth(int amount)
+		{
+			this.health += amount;
+			Resources.castleHealth = this.health;
+		}
     }
 }

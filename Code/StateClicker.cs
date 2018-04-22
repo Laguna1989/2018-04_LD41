@@ -298,7 +298,7 @@ namespace JamTemplate
 		private void AddCastleHealth()
 		{
 			if(Resources.DecreaseMoney(1000))
-				Resources.castleHealth++;
+				Resources.AddCastleHealth(1);
 		}
 		#endregion
 	}
