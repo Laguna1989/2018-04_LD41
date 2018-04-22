@@ -18,7 +18,7 @@ namespace JamUtilities
             textOffset = new SFML.Window.Vector2f( 5 + 32 + 8 , 5);
         }
 
-		public TextIconButton(string t, string i, Action cb, Vector2f scale, Vector2f textOffset) : base(t, cb)
+		public TextIconButton(string t, string i, Action cb, Vector2f scale) : base(t, cb)
 		{
 			icon = new Sprite(TextureManager.GetTextureFromFileName(i));
 			icon.Scale = new SFML.Window.Vector2f(2, 2);
@@ -28,7 +28,7 @@ namespace JamUtilities
 			sprOver.Scale = scale;
 			sprPressed.Scale = scale;
 
-			base.textOffset = textOffset;
+			//base.textOffset = textOffset;
 		}
 
 		public override void Update(TimeObject to)

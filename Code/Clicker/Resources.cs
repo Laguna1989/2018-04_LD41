@@ -22,6 +22,8 @@ namespace JamTemplate
 
 		public static int amountSelected = 1;
 
+		public static int castleHealth = 10;
+
 
 		public static void UpdateIdleIncome()
 		{
@@ -60,6 +62,41 @@ namespace JamTemplate
 			{
 				money = newBalacnce;
 				Console.WriteLine("New balance: " + newBalacnce);
+				return true;
+			}
+			else
+				return false;
+		}
+
+		public static bool DecreaseResearch(long amount)
+		{
+			long newBalacnce = research - amount;
+			if (newBalacnce >= 0)
+			{
+				research = newBalacnce;
+				Console.WriteLine("New research balance: " + newBalacnce);
+				return true;
+			}
+			else
+				return false;
+		}
+
+		public static bool CheckMoney(long amount)
+		{
+			long newBalacnce = money - amount;
+			if (newBalacnce >= 0)
+			{
+				return true;
+			}
+			else
+				return false;
+		}
+
+		public static bool CheckResearch(long amount)
+		{
+			long newBalacnce = research - amount;
+			if (newBalacnce >= 0)
+			{
 				return true;
 			}
 			else

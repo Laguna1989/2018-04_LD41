@@ -1,4 +1,4 @@
-﻿using JamUtilities;
+using JamUtilities;
 using SFML.Graphics;
 using SFML.Window;
 using System;
@@ -150,6 +150,10 @@ namespace JamTemplate
         public override void Update(TimeObject to)
         {
             base.Update(to);
+
+			Resources.castleHealth = health;
+
+
             spawnDeadTime -= to.ElapsedGameTime;
 
 #if !DEBUG

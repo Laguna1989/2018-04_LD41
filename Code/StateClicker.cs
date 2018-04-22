@@ -11,6 +11,8 @@ namespace JamTemplate
     class StateClicker : JamUtilities.GameState
     {
 
+		private Animation researchFlask;
+
 		public Animation Coin;
 		private float animationTime;
 
@@ -21,6 +23,10 @@ namespace JamTemplate
 		private TextButton amount100;
 
 		private List<TextButton> resourceGainers = new List<TextButton>();
+
+		private TextButton alchemy;
+		private List<TextButton> upgrades = new List<TextButton>();
+
 
 		public override void Init()
         {
@@ -66,33 +72,77 @@ namespace JamTemplate
 				Add(amount100);
 				#endregion
 
-				float rightWidth = -(GP.WindowSize.X - amount100.getSize().X - 2.5f - amount10.getSize().X - 2.5f - amount1.getSize().X - 2.5f - GP.WindowSize.X) + 25f;
+				float rightWidth = -(GP.WindowSize.X - amount100.getSize().X - 2.5f - amount10.getSize().X - 2.5f - amount1.getSize().X - 2.5f - GP.WindowSize.X) + 40f;
 				float rightHeight = GP.WindowSize.Y - 2.5f - amount1.getSize().Y - 50f;
 
 
 				#region Resource Gainers
 
-				Vector2f resourceGainerScale = new Vector2f(2.6f, 3f);
+				Vector2f resourceGainerScale = new Vector2f(2.75f, 3f);
 				Vector2f resourceGainerTextOffset = new Vector2f(50f, 0f);
 
-				resourceGainers.Add(new TextIconButton("Squire", "../GFX/ic_squire.png", Resources.resourceGainers[ResourceGainer.Type.Squire].Add, resourceGainerScale, resourceGainerTextOffset));
-				resourceGainers.Add(new TextIconButton("Farmer", "../GFX/ic_farmer.png", Resources.resourceGainers[ResourceGainer.Type.Farmer].Add, resourceGainerScale, resourceGainerTextOffset));
-				resourceGainers.Add(new TextIconButton("Knight", "../GFX/ic_knight.png", Resources.resourceGainers[ResourceGainer.Type.Knight].Add, resourceGainerScale, resourceGainerTextOffset));
-				resourceGainers.Add(new TextIconButton("Feudal Lord", "../GFX/ic_lord.png", Resources.resourceGainers[ResourceGainer.Type.Feudal_Lord].Add, resourceGainerScale, resourceGainerTextOffset));
-				resourceGainers.Add(new TextIconButton("Church", "../GFX/ic_priest.png", Resources.resourceGainers[ResourceGainer.Type.Church].Add, resourceGainerScale, resourceGainerTextOffset));
-				resourceGainers.Add(new TextIconButton("Gold Mine", "../GFX/ic_miner_gold.png", Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].Add, resourceGainerScale, resourceGainerTextOffset));
-				resourceGainers.Add(new TextIconButton("Diamond Mine", "../GFX/ic_miner_diamond.png", Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].Add, resourceGainerScale, resourceGainerTextOffset));
+				resourceGainers.Add(new TextIconButton("Squire", "../GFX/ic_squire.png", Resources.resourceGainers[ResourceGainer.Type.Squire].Add, resourceGainerScale));
+				resourceGainers.Add(new TextIconButton("Farmer", "../GFX/ic_farmer.png", Resources.resourceGainers[ResourceGainer.Type.Farmer].Add, resourceGainerScale));
+				resourceGainers.Add(new TextIconButton("Knight", "../GFX/ic_knight.png", Resources.resourceGainers[ResourceGainer.Type.Knight].Add, resourceGainerScale));
+				resourceGainers.Add(new TextIconButton("Feudal Lord", "../GFX/ic_lord.png", Resources.resourceGainers[ResourceGainer.Type.Feudal_Lord].Add, resourceGainerScale));
+				resourceGainers.Add(new TextIconButton("Church", "../GFX/ic_priest.png", Resources.resourceGainers[ResourceGainer.Type.Church].Add, resourceGainerScale));
+				resourceGainers.Add(new TextIconButton("Gold Mine", "../GFX/ic_miner_gold.png", Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].Add, resourceGainerScale));
+				resourceGainers.Add(new TextIconButton("Diamond Mine", "../GFX/ic_miner_diamond.png", Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].Add, resourceGainerScale));
 
 				for (int i = 1; i < 8; i++)
 				{
 					resourceGainers[i - 1].SetPosition(new Vector2f(GP.WindowSize.X - rightWidth, (rightHeight / 7 ) * i - 15f));
-					//resourceGainers[i - 1].SetTextOffset(new Vector2f(7.5f, 5f));
+					resourceGainers[i - 1].SetTextOffset(resourceGainerTextOffset);
 
 					Add(resourceGainers[i - 1]);
 				}
 				#endregion
 
 				#region Research
+
+				Vector2f leftButtonScale = new Vector2f(3.1f, 3f);
+
+
+
+				alchemy = new TextIconButton("Alchemy Lab", "../GFX/research-button_lastFrame.png", Resources.resourceGainers[ResourceGainer.Type.Alchemy_Lab].Add, leftButtonScale);
+				alchemy.SetPosition(new Vector2f(0, 65f));
+				alchemy.SetTextOffset(new Vector2f(50f, 0f));
+
+				Add(alchemy);
+
+				#region Research Flask
+				researchFlask = new Animation("../GFX/research-button.png", new Vector2u(16, 16));
+				researchFlask.Position = new Vector2f(275f, 5f);
+
+				researchFlask.Add("idle", new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 }, 0.075f);
+				researchFlask.Play("idle");
+
+				Add(researchFlask);
+				#endregion
+
+				float leftHeightCeiling = 140;
+				float leftHeight = (GP.WindowSize.Y - leftHeightCeiling) / 7;
+
+				Vector2f leftTextOffset = new Vector2f(50f, 0f);
+
+				upgrades.Add(new TextIconButton("+Critical Chance", "../GFX/ic_crtperc.png", Tower.ResearchManager.IncreaseCritChance, leftButtonScale));
+				upgrades.Add(new TextIconButton("+Critical Factor", "../GFX/ic_crtfct.png", Tower.ResearchManager.IncreaseCritFactor, leftButtonScale));
+				upgrades.Add(new TextIconButton("+Freeze Chance", "../GFX/ic_frperc.png", Tower.ResearchManager.IncreaseFreezeChance, leftButtonScale));
+				upgrades.Add(new TextIconButton("+Freeze Duration", "../GFX/ic_frzdur.png", Tower.ResearchManager.IncreaseFreezeDuration, leftButtonScale));
+				upgrades.Add(new TextIconButton("+Drop Chance", "../GFX/ic_goldperc.png", Tower.ResearchManager.IncreaseGoldChance, leftButtonScale));
+				upgrades.Add(new TextIconButton("+Castle Health", "../GFX/heart_firstFrame.png", AddCastleHealth, leftButtonScale));
+
+
+
+
+				for (int i = 1; i < 7; i++)
+				{
+					upgrades[i - 1].SetPosition(new Vector2f(0, leftHeightCeiling + leftHeight * (i - 1)));
+					upgrades[i - 1].SetTextOffset(leftTextOffset);
+
+					Add(upgrades[i - 1]);
+				}
+
 				#endregion
 
 				fistINIT = true;
@@ -110,15 +160,63 @@ namespace JamTemplate
 			SmartText.DrawText("Gold: " + Resources.money, TextAlignment.MID, new Vector2f(GP.WindowSize.X / 2, 0f), rw);
 			SmartText.DrawText("per second: " + Resources.idleMoneyIncome, TextAlignment.MID, new Vector2f(GP.WindowSize.X / 2, 25f), rw);
 
+			SmartText.DrawText("Research points: " + Resources.research + "\nper second: " + Resources.idleResearchIncome, TextAlignment.LEFT, new Vector2f(5f, 5f), rw);
 			#endregion
 
-			resourceGainers[0].text = "Squire\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Squire].nextCost() * Resources.amountSelected + "G";
-			resourceGainers[1].text = "Farmer\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Farmer].nextCost() * Resources.amountSelected + "G";
-			resourceGainers[2].text = "Knight\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Knight].nextCost() * Resources.amountSelected + "G";
-			resourceGainers[3].text = "Feudal Lord\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Feudal_Lord].nextCost() + "G";
-			resourceGainers[4].text = "Church\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Church].nextCost() * Resources.amountSelected + "G";
-			resourceGainers[5].text = "Gold Mine\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].nextCost() * Resources.amountSelected + "G";
-			resourceGainers[6].text = "Diamond Mine\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].nextCost() * Resources.amountSelected + "G";
+
+
+			foreach (var item in resourceGainers)
+				item.active = false;
+
+			foreach (var item in upgrades)
+				item.active = false;
+
+			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Squire].nextCost() * Resources.amountSelected)) resourceGainers[0].active = true;
+			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Farmer].nextCost() * Resources.amountSelected)) resourceGainers[1].active = true;
+			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Knight].nextCost() * Resources.amountSelected)) resourceGainers[2].active = true;
+			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Feudal_Lord].nextCost() * Resources.amountSelected)) resourceGainers[3].active = true;
+			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Church].nextCost() * Resources.amountSelected)) resourceGainers[4].active = true;
+			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].nextCost() * Resources.amountSelected)) resourceGainers[5].active = true;
+			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].nextCost() * Resources.amountSelected)) resourceGainers[6].active = true;
+
+			if (Resources.CheckResearch(Tower.ResearchManager.CritChanceCost)) upgrades[0].active = true;
+			if (Resources.CheckResearch(Tower.ResearchManager.CritFactorCost)) upgrades[1].active = true;
+			if (Resources.CheckResearch(Tower.ResearchManager.FreezeChanceCost)) upgrades[2].active = true;
+			if (Resources.CheckResearch(Tower.ResearchManager.FreezeDurationCost)) upgrades[3].active = true;
+			if (Resources.CheckResearch(Tower.ResearchManager.GoldChanceCost)) upgrades[4].active = true;
+
+
+			resourceGainers[0].text = "Squire"+string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Squire].amount) +"\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Squire].nextCost() * Resources.amountSelected + "G";
+			resourceGainers[1].text = "Farmer" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Farmer].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Farmer].nextCost() * Resources.amountSelected + "G";
+			resourceGainers[2].text = "Knight" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Knight].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Knight].nextCost() * Resources.amountSelected + "G";
+			resourceGainers[3].text = "Feudal Lord" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Feudal_Lord].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Feudal_Lord].nextCost() + "G";
+			resourceGainers[4].text = "Church" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Church].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Church].nextCost() * Resources.amountSelected + "G";
+			resourceGainers[5].text = "Gold Mine" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].nextCost() * Resources.amountSelected + "G";
+			resourceGainers[6].text = "Diamond Mine" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].nextCost() * Resources.amountSelected + "G";
+
+
+			upgrades[0].text = "+Critical Chance\nCost: " + Tower.ResearchManager.CritChanceCost + "R";
+			upgrades[1].text = "+Critical Factor\nCost: " + Tower.ResearchManager.CritFactorCost + "R";
+			upgrades[2].text = "+Freeze Chance\nCost: " + Tower.ResearchManager.FreezeChanceCost + "R";
+			upgrades[3].text = "+Freeze Duration\nCost: " + Tower.ResearchManager.FreezeDurationCost + "R";
+			upgrades[4].text = "+Drop Chance\nCost: " + Tower.ResearchManager.GoldChanceCost + "R";
+
+			if (Resources.castleHealth < 10)
+			{
+				upgrades[5].active = true;
+				upgrades[5].text = "+Castle Health\nCost: 1000G";
+			}
+			else
+			{
+				upgrades[5].active = false;
+				upgrades[5].text = "+Castle Health\nHEALTH FULL";
+			}
+
+			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Alchemy_Lab].nextCost())) alchemy.active = true;
+			else alchemy.active = false;
+
+
+			alchemy.text = "Alchemy Lab\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Alchemy_Lab].nextCost() * Resources.amountSelected + "G";
 		}
 
 		bool animationPlaying = false;
@@ -144,6 +242,12 @@ namespace JamTemplate
 				animationTime = 0f;
 				animationPlaying = false;
 			}
+
+			//if(Keyboard.IsKeyPressed(Keyboard.Key.S))
+			//{
+			//	researchFlask.Position += new Vector2f(0, 0.5f);
+			//	Console.WriteLine(researchFlask.Position.Y);
+			//}
 		}
 		
 		private bool buttonPressed;
@@ -190,5 +294,12 @@ namespace JamTemplate
 
 		#endregion
 
+		#region Upgrade buton functions
+		private void AddCastleHealth()
+		{
+			if(Resources.DecreaseMoney(1000))
+				Resources.castleHealth++;
+		}
+		#endregion
 	}
 }
