@@ -10,6 +10,8 @@ namespace JamUtilities
 {
     public class GP
     {
+        
+
         public static RenderWindow Window { get; set; } = null;
         public static View WindowGameView { get; set; } = null;
         public static Vector2u WindowSize { get { return Window.Size; } }
@@ -23,7 +25,7 @@ namespace JamUtilities
 
         public static float TowerReloadTime { get; set; } = 2.05f;
         
-        public static float TowerLevelUpCostExponent { get; set; } = 1.2f;
+        public static float TowerLevelUpCostExponent { get; set; } = 1.25f;
 
         public static float ShotSpeed { get; set; } = 200;
         public static float ShotDamageBase { get; set; } = 0.5f;
@@ -31,7 +33,10 @@ namespace JamUtilities
         public static float ShotMaxLifeTime { get; set; } = 2.5f;
 
         public static Music music { get; set; }
-        
-
+        public static long ResearchCritChanceBaseCost { get; set; } = 30;
+        public static long ResearchCritFactorBaseCost { get; set; } = 25;
+        public static long ResearcFreezeChanceBaseCost { get; set; } = 30;
+        public static long ResearcFreezeDurationBaseCost { get; set; } = 25;
+        public static long GoldDropChanceBaseCost { get; set; } = 10;
     }
 }

@@ -53,6 +53,7 @@ namespace JamTemplate
 		public static void ManualMoneyGain()
 		{
 			money += moneyPerClick;
+            ResourceGainer.totalBuildingsBuilt += 0.125f;
 		}
 
 		public static bool DecreaseMoney(long amount)

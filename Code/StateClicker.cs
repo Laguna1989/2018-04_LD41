@@ -26,9 +26,18 @@ namespace JamTemplate
 
 		private TextButton alchemy;
 		private List<TextButton> upgrades = new List<TextButton>();
+        private bool buttonPressed;
+
+        private float BuildingsBuilt = 0;
+
+        private int NextAttackIncoming = 10;
+
+        private float age = 0;
 
 
-		public override void Init()
+        
+
+        public override void Init()
         {
             base.Init();
 
@@ -217,40 +226,77 @@ namespace JamTemplate
 
 
 			alchemy.text = "Alchemy Lab\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Alchemy_Lab].nextCost() * Resources.amountSelected + "G";
+
+            if (BuildingsBuilt >= 0.8 * NextAttackIncoming)
+                SmartText.DrawText("Invaders are gathering at the borders!",TextAlignment.MID, new Vector2f(400,300), new Color(158, 16, 0), rw);
 		}
 
 		bool animationPlaying = false;
-		public override void Update(TimeObject timeObject)
+		public override void Update(TimeObject to)
         {
-            base.Update(timeObject);
 
-			if (!SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left) && buttonPressed == true)
-				buttonPressed = false;
 
-			if (MousePressedOverSprite(Coin._sprites[0].Sprite))
-			{
-				Resources.ManualMoneyGain();
-				Coin.Play("spin");
-				animationPlaying = true;
-			}
+            if (true)
+            {
+                age += to.ElapsedGameTime;
+                base.Update(to);
 
-			if (animationPlaying)
-				animationTime += timeObject.ElapsedGameTime;
-			if (animationPlaying && animationTime >= 0.25f)
-			{
-				Coin.Play("idle");
-				animationTime = 0f;
-				animationPlaying = false;
-			}
+#if DEBUG
+                if (Input.justPressed[Keyboard.Key.F9])
+                {
+                    Resources.money += 1000;
+                }
+#endif
 
-			//if(Keyboard.IsKeyPressed(Keyboard.Key.S))
-			//{
-			//	researchFlask.Position += new Vector2f(0, 0.5f);
-			//	Console.WriteLine(researchFlask.Position.Y);
-			//}
+                if (!SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Left) && buttonPressed == true)
+                    buttonPressed = false;
+
+                if (MousePressedOverSprite(Coin._sprites[0].Sprite))
+                {
+                    Resources.ManualMoneyGain();
+                    Coin.Play("spin");
+                    animationPlaying = true;
+                }
+
+                if (animationPlaying)
+                    animationTime += to.ElapsedGameTime;
+                if (animationPlaying && animationTime >= 0.25f)
+                {
+                    Coin.Play("idle");
+                    animationTime = 0f;
+                    animationPlaying = false;
+                }
+
+                T.TraceD(getValue().ToString());
+                T.TraceD(NextAttackIncoming.ToString());
+
+
+
+                if (BuildingsBuilt < NextAttackIncoming && getValue() >= NextAttackIncoming)
+                {
+
+
+                    float incr =  4 + NextAttackIncoming * (0.25f);
+                    if (incr > 25) incr = 25;
+                    NextAttackIncoming += (int)incr;
+                    
+
+                    Game.switchToTower();
+                    
+
+                    
+                }
+                BuildingsBuilt = ResourceGainer.totalBuildingsBuilt;
+
+            }
 		}
 		
-		private bool buttonPressed;
+		
+        private float getValue ()
+        {
+            return ResourceGainer.totalBuildingsBuilt + age / 25.0f;
+        }
+
 		private bool MousePressedOverSprite(Sprite sprite)
 		{
 			if (JamUtilities.Mouse.MousePositionInWorld.X > sprite.Position.X && JamUtilities.Mouse.MousePositionInWorld.X < sprite.Position.X + 16 * sprite.Scale.X)

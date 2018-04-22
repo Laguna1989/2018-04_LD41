@@ -30,17 +30,22 @@ namespace JamTemplate.Tower
 
         private Sound sndHit;
 
-        public Enemy (Path pa, StateTower  s, float delay = 0, float level = 1.0f) : base("../GFX/enemy.png", new Vector2u(16,16))
+        private float velocityFactor = 1;
+
+        public Enemy (Path pa, StateTower  s, float delay = 0, float lv = 1.0f, float vscale = 1.0f) : base("../GFX/enemy.png", new Vector2u(16,16))
         {
             p = pa;
             state = s;
+            velocityFactor = vscale;
+            if (velocityFactor >= 2)
+                velocityFactor = 2;
             Add("walkB", new List<int>(new int[] { 0, 1, 2, 3 }), 0.25f);
             Add("walkLR", new List<int>(new int[] { 4,5,6,7}), 0.25f);
             Add("walkT", new List<int>(new int[] { 8, 9, 10, 11 }), 0.25f);
             Play("walkB");
             Origin = new Vector2f(8,8);
 
-            health *= level;
+            health *= lv;
             
             Position = new Vector2f(p.start.X * GP.WorldTileSizeInPixel + 14, p.start.Y * GP.WorldTileSizeInPixel + 8);
             startDelay = delay;
@@ -67,6 +72,7 @@ namespace JamTemplate.Tower
 
         public override void Update(TimeObject to)
         {
+
 
 
             base.Update(to);
@@ -102,7 +108,7 @@ namespace JamTemplate.Tower
                 //moveTimer -= to.ElapsedGameTime * ((freezeTimer > 0) ? 0 : 1);
                 if (moveTimer <= 0)
                 {
-                    moveTimer = GP.EnemyMoveTimerMax;
+                    moveTimer = GP.EnemyMoveTimerMax/velocityFactor;
 
                     //check if end is reached
                     if (pathidx >= p.path.Count)
@@ -121,7 +127,7 @@ namespace JamTemplate.Tower
                     Path.Dir newdir = p.path[pathidx];
 
                     // get new velocity and set new animation
-                    float vscale = GP.WorldTileSizeInPixel / GP.EnemyMoveTimerMax;
+                    float vscale = GP.WorldTileSizeInPixel / (GP.EnemyMoveTimerMax/velocityFactor) ;
                     velocity = new Vector2f(Path.Dir2Vec(newdir).X * vscale, Path.Dir2Vec(newdir).Y * vscale);
 
                     SetWalkingAnimation(newdir);
