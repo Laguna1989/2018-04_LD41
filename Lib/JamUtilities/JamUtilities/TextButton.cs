@@ -58,6 +58,11 @@ namespace JamUtilities
 			sprPressed.Scale = scale;
 
 			tc = Color.White;
+
+
+			if (sndbufClick == null)
+				sndbufClick = new SoundBuffer("../SFX/click.wav");
+			sndClick = new Sound(sndbufClick);
 		}
 
 		public virtual void Draw(RenderWindow rw)
