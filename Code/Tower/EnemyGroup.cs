@@ -16,7 +16,11 @@ namespace JamTemplate.Tower
         public delegate void DelteCallBackType(Enemy e);
         public DelteCallBackType DeleteCallback = null;
 
-        
+        public  void Clear()
+        {
+            members.Clear();
+        }
+
 
         public EnemyGroup()
         {

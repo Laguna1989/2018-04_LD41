@@ -152,10 +152,11 @@ namespace JamUtilities
             newPos += velocity * deltaT;
             SetPosition(newPos);
 
-            _flashOverlay.Scale = _scaleVector;
+            _flashOverlay.Scale = _sprite.Scale;
             _flashOverlay.Rotation = Rotation;
             _flashOverlay.Origin = Origin;
             _flashOverlay.Position = Position;
+            
 
             if (IsInFlash)
             {
@@ -271,7 +272,8 @@ namespace JamUtilities
                 col.A = oldAlpha;
                 _sprite.Color = col;
             }
-            rw.Draw(_flashOverlay);
+            if (_sprite.Color.A != 0 && Alpha != 0)
+                rw.Draw(_flashOverlay);
         }
 
         public virtual  bool IsDead()

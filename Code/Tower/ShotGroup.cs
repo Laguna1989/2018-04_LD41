@@ -17,6 +17,10 @@ namespace JamTemplate.Tower
         {
             members = new List<Shot>();
         }
+        public void Clear()
+        {
+            members.Clear();
+        }
 
 
         public void Draw(RenderWindow rw)

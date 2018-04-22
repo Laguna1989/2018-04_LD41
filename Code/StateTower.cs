@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using JamTemplate.Tower;
 using SFML.Audio;
+using JamUtilities.Tweens;
 
 namespace JamTemplate
 {
@@ -25,6 +26,7 @@ namespace JamTemplate
 
         public int health = 10;
 
+
         private Animation castle;
 
         private CloudLayer cl;
@@ -36,6 +38,8 @@ namespace JamTemplate
         private SoundBuffer sndbufLoose;
         private Sound sndLoose;
 
+        private SmartSprite notify;
+        private float age = 0;
 
         public void Preload()
         {
@@ -56,28 +60,33 @@ namespace JamTemplate
 
                 allTowers = new TowerGroup();
                 Add(allTowers);
-
-                allTowers.Add(new Tower.Tower(3, 2, this));
-                allTowers.Add(new Tower.Tower(6, 6, this));
-                allTowers.Add(new Tower.Tower(8, 12, this));
-
-                allTowers.Add(new Tower.Tower(11, 12, this));
-
+                SpawnTowers();
 
                 allEnemies = new EnemyGroup();
                 allEnemies.DeleteCallback += EnemyDead;
                 //SpawnWave();
                 Add(allEnemies);
 
-                
+
                 Add(castle);
-                
+
                 allShots = new ShotGroup();
                 Add(allShots);
 
+
+
+
+                notify = new SmartSprite("../GFX/box.png");
+                notify.Origin = new Vector2f(96 / 2, 24 / 2);
+                notify.Flash(new Color(158, 16, 0), 9999999999999999999);
+                Add(notify);
+
+
                 siegeButton = new TextButton(" Start Siege", SpawnWave);
-                siegeButton.SetPosition(new Vector2f(400-96, 10));
+                siegeButton.SetPosition(new Vector2f(400 - 96, 10));
                 Add(siegeButton);
+
+                notify.Position = siegeButton.GetPosition() + new Vector2f(96, 24);
 
 
                 coin = new Animation("../GFX/coin.png", new Vector2u(16, 16));
@@ -89,16 +98,24 @@ namespace JamTemplate
                 heart = new Animation("../GFX/heart.png", new Vector2u(16, 16));
                 heart.SetPosition(new Vector2f(4, 46));
                 heart.SetScale(0.75f, 0.75f);
-                heart.Add("idle", new List<int>(new int[] { 0,1,2,3 }),0.127f);
+                heart.Add("idle", new List<int>(new int[] { 0, 1, 2, 3 }), 0.127f);
                 heart.Play("idle");
 
                 sndbufLoose = new SoundBuffer("../SFX/loose.wav");
                 sndLoose = new Sound(sndbufLoose);
 
-                
+
 
 
             }
+        }
+
+        private void SpawnTowers()
+        {
+            allTowers.Add(new Tower.Tower(3, 2, this));
+            allTowers.Add(new Tower.Tower(6, 6, this));
+            allTowers.Add(new Tower.Tower(8, 12, this));
+            allTowers.Add(new Tower.Tower(11, 12, this));
         }
 
         public void EnemyDead(Enemy e)
@@ -139,6 +156,13 @@ namespace JamTemplate
             cl.Update(to);
 #endif
 
+            age += to.ElapsedGameTime;
+            float v = (float)((Math.Sin(age*3) + 1)*0.5 * 0.2 + 1 );
+            notify.Scale(v, v);
+            //T.Trace(wave.ToString());
+            if (wave >= 2)
+                notify.Alpha = 0;
+
             siegeButton.active = (allEnemies.Count == 0);
 
 
@@ -151,7 +175,14 @@ namespace JamTemplate
 
             //    SpawnWave();
             //}
+
+            if (health <= 0)
+            {
+                Reset();
+                Game.SwitchState(new StateMenu());
                 
+            }
+
 
             foreach(Shot s in allShots)
             {
@@ -200,6 +231,17 @@ namespace JamTemplate
                     }
                 }
             }
+        }
+
+        private void Reset()
+        {
+            wave = 1;
+            allEnemies.Clear();
+            allShots.Clear();
+            allTowers.Clear();
+            SpawnTowers();
+            health = 10;
+            Resources.Reset();
         }
 
         internal void CloseAllMenus()

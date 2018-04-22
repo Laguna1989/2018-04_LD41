@@ -94,6 +94,11 @@ namespace JamTemplate
 				idleResearchIncome += pair.Value.researchIncome * pair.Value.amount;
 				
 			}
-		} 
-	}
+		}
+
+        internal static void Reset()
+        {
+            money = 0;
+        }
+    }
 }
