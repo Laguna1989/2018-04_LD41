@@ -15,9 +15,11 @@ namespace JamTemplate
         private bool exiting = false;
 
         private TextButton tb_startGame;
+        private TextButton tb_mute;
 
         private Animation heart1;
         private Animation heart2;
+
 
         public override void Init()
         {
@@ -26,6 +28,10 @@ namespace JamTemplate
             tb_startGame = new TextButton(" Start Game", StartGame);
             tb_startGame.SetPosition(new Vector2f(400-96, 220));
             Add(tb_startGame);
+
+            tb_mute = new TextButton(" Mute Music", MuteMusic);
+            tb_mute.SetPosition(new Vector2f(400 - 96, 220 + 24*2 + 8));
+            Add(tb_mute);
 
             heart1 = new Animation("../GFX/heart.png", new Vector2u(16, 16));
             heart1.SetPosition(new Vector2f(400-96-32, 220 + 8));
@@ -40,6 +46,16 @@ namespace JamTemplate
             heart2.Add("idle", new List<int>(new int[] { 0, 1, 2, 3 }), 0.127f);
             heart2.Play("idle", 2);
             Add(heart2);
+        }
+
+        private void MuteMusic()
+        {
+            if (GP.music.Volume == 0)
+            {
+                GP.music.Volume = 60;
+            }
+            else
+                GP.music.Volume = 0;
         }
 
         public override void Draw(RenderWindow rw)
