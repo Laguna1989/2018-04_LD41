@@ -11,8 +11,8 @@ namespace JamUtilities
     {
         public static Font _font;
         private static Text _text;
-        public static int _lineLengthInChars = 18;
-        public static float _lineSpread = 1.2f;
+        public static int _lineLengthInChars;
+        public static float _lineSpread;
 
 
         public static void DrawText(string text, Vector2f position, RenderWindow rw)

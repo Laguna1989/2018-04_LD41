@@ -14,7 +14,7 @@ namespace JamUtilities
         public static View WindowGameView { get; set; } = null;
         public static Vector2u WindowSize { get { return Window.Size; } }
 
-        public static string WindowGameName { get; private set; } = "$GameTitle$";
+        public static string WindowGameName { get; private set; } = "Grantchester Meadows";
 
         public static int WorldTileSizeInPixel { get; set; } = 32;
 

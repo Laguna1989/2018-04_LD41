@@ -32,9 +32,6 @@ namespace JamTemplate
             try
             {
                 SmartText._font = new Font("../GFX/font.ttf");
-
-                SmartText._lineLengthInChars = 18;
-                SmartText._lineSpread = 1.2f;
             }
             catch (Exception e)
             {

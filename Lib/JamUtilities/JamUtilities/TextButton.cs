@@ -23,7 +23,7 @@ namespace JamUtilities
 
         public Action PressCallback = null;
 
-        protected Vector2f textOffset = new Vector2f(5, 5);
+        protected Vector2f textOffset = new Vector2f(3, 3);
 
         static private SoundBuffer sndbufClick = null;
         private Sound sndClick;
