@@ -34,6 +34,7 @@ namespace JamTemplate
 
         private float age = 0;
 
+        private ParticleSystem coinParticles;
 
         
 
@@ -43,24 +44,31 @@ namespace JamTemplate
 
 			if (fistINIT == false)
 			{
-				#region Coin
-				Coin = new Animation("../GFX/coin.png", new Vector2u(16, 16));
+                coinParticles = new ParticleSystem("../GFX/coin.png", new IntRect(0, 0, 16, 16), 16);
+                Add(coinParticles);
+                coinParticles.acceleration = new Vector2f(0, 20);
+
+                #region Coin
+                Coin = new Animation("../GFX/coin.png", new Vector2u(16, 16));
 				Coin.Add("idle", new List<int>(new int[] { 0 }), 1f);
 				Coin.Add("spin", new List<int>(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }), 0.025f);
 
 
 				Coin.SetScale(5f, 5f);
-
-
+                
 				Coin.Play("idle");
 
 				Coin.Position = new Vector2f(GP.WindowSize.X / 2 - 8*Coin.Scale.X, GP.WindowSize.Y / 2 - 8 * Coin.Scale.Y);
 
 				Add(Coin);
-				#endregion
+                #endregion
 
-				#region Amount buttons
-				amount1 = new TextButton("1", selectAmount1, new Vector2f(0.75f, 1.5f));
+                
+
+
+
+                #region Amount buttons
+                amount1 = new TextButton("1", selectAmount1, new Vector2f(0.75f, 1.5f));
 				amount10 = new TextButton("10", selectAmount10, new Vector2f(0.75f, 1.5f));
 				amount100 = new TextButton("100", selectAmount100, new Vector2f(0.75f, 1.5f));
 
@@ -256,6 +264,7 @@ namespace JamTemplate
                     Resources.ManualMoneyGain();
                     Coin.Play("spin");
                     animationPlaying = true;
+                    coinParticles.Start( coinParticleSetup );
                 }
 
                 if (animationPlaying)
@@ -290,8 +299,27 @@ namespace JamTemplate
 
             }
 		}
-		
-		
+
+        private void coinParticleSetup(SmartSprite s)
+        {
+
+            s.Alpha = 255;
+            float angle = (float)(RandomGenerator.Random.NextDouble()*2*Math.PI);
+            float r = (float)(RandomGenerator.Random.NextDouble() * 5*16);
+
+            float x = (float)(Math.Cos(angle) * r) + Coin.Position.X + 80;
+            float y = (float)(Math.Sin(angle) * r) + Coin.Position.Y + 80;
+
+            float vx = (float)(Math.Cos(angle) * 200);
+            float vy = (float)(((Math.Sin(angle) * 200)));
+
+            s.SetPosition(new Vector2f(x,y));
+            s.velocity = new Vector2f(vx, vy);
+
+            JamUtilities.Tweens.SpriteAlphaTween.createAlphaTween(s, 0, 0.75f,null, PennerDoubleAnimation.EquationType.CubicEaseOut);
+        }
+
+
         private float getValue ()
         {
             return ResourceGainer.totalBuildingsBuilt + age / 25.0f;
