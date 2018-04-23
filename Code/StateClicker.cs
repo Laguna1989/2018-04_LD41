@@ -146,7 +146,7 @@ namespace JamTemplate
 
 				for (int i = 1; i < 7; i++)
 				{
-					upgrades[i - 1].SetPosition(new Vector2f(0, leftHeightCeiling + leftHeight * (i - 1)));
+					upgrades[i - 1].SetPosition(new Vector2f(0,  16 +leftHeightCeiling + (leftHeight + 4) * (i - 1)));
 					upgrades[i - 1].SetTextOffset(leftTextOffset);
 
 					Add(upgrades[i - 1]);
@@ -189,9 +189,9 @@ namespace JamTemplate
 			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].nextCost() * Resources.amountSelected)) resourceGainers[6].active = true;
 
 			if (Resources.CheckResearch(Tower.ResearchManager.CritChanceCost)) upgrades[0].active = true;
-			if (Resources.CheckResearch(Tower.ResearchManager.CritFactorCost)) upgrades[1].active = true;
+			if (Resources.CheckResearch(Tower.ResearchManager.CritFactorCost) && Tower.ResearchManager.CritChance > 0) upgrades[1].active = true;
 			if (Resources.CheckResearch(Tower.ResearchManager.FreezeChanceCost)) upgrades[2].active = true;
-			if (Resources.CheckResearch(Tower.ResearchManager.FreezeDurationCost)) upgrades[3].active = true;
+			if (Resources.CheckResearch(Tower.ResearchManager.FreezeDurationCost) && Tower.ResearchManager.FreezeChance > 0) upgrades[3].active = true;
 			if (Resources.CheckResearch(Tower.ResearchManager.GoldChanceCost)) upgrades[4].active = true;
 
 

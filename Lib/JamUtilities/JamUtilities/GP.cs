@@ -32,9 +32,9 @@ namespace JamUtilities
 
 		public static Music music { get; set; }
 		public static long ResearchCritChanceBaseCost { get; set; } = 30;
-		public static long ResearchCritFactorBaseCost { get; set; } = 25;
+		public static long ResearchCritFactorBaseCost { get; set; } = 20;
 		public static long ResearcFreezeChanceBaseCost { get; set; } = 30;
-		public static long ResearcFreezeDurationBaseCost { get; set; } = 25;
+		public static long ResearcFreezeDurationBaseCost { get; set; } = 20;
 		public static long GoldDropChanceBaseCost { get; set; } = 10;
 	}
 }

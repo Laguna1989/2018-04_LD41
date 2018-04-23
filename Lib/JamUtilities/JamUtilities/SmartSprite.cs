@@ -240,29 +240,29 @@ namespace JamUtilities
 
         public virtual void Draw(RenderWindow rw)
         {
-            if (IsInBrokenPixelMode)
-            {
-                // getting the original values
-                Color oldColor = _sprite.Color;
-                Vector2f oldpos = _sprite.Position;
+            //if (IsInBrokenPixelMode)
+            //{
+            //    // getting the original values
+            //    Color oldColor = _sprite.Color;
+            //    Vector2f oldpos = _sprite.Position;
 
 
-                float counter = 0.0f;
-                float positionIncrement = BrokenPixelPower / (float)(_brokenPixelColorList.Count - 1);
-                Vector2f positionStart = _sprite.Position - (0.5f * BrokenPixelDirection * BrokenPixelPower);
-                foreach (var c in _brokenPixelColorList)
-                {
-                    _sprite.Position = positionStart + (positionIncrement * counter) * BrokenPixelDirection;
-                    _sprite.Color = c;
-                    rw.Draw(_sprite);
-                    counter += 1.0f;
-                }
+            //    float counter = 0.0f;
+            //    float positionIncrement = BrokenPixelPower / (float)(_brokenPixelColorList.Count - 1);
+            //    Vector2f positionStart = _sprite.Position - (0.5f * BrokenPixelDirection * BrokenPixelPower);
+            //    foreach (var c in _brokenPixelColorList)
+            //    {
+            //        _sprite.Position = positionStart + (positionIncrement * counter) * BrokenPixelDirection;
+            //        _sprite.Color = c;
+            //        rw.Draw(_sprite);
+            //        counter += 1.0f;
+            //    }
 
-                // resetting the original values
-                _sprite.Color = oldColor;
-                _sprite.Position = oldpos;
-            }
-            else
+            //    // resetting the original values
+            //    _sprite.Color = oldColor;
+            //    _sprite.Position = oldpos;
+            //}
+            //else
             {
                 Color col = _sprite.Color;
                 byte oldAlpha = col.A;
