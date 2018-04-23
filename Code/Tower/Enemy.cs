@@ -39,9 +39,9 @@ namespace JamTemplate.Tower
 			velocityFactor = vscale;
 			if (velocityFactor >= 2)
 				velocityFactor = 2;
-			Add("walkB", new List<int>(new int[] { 0, 1, 2, 3 }), 0.25f);
-			Add("walkLR", new List<int>(new int[] { 4, 5, 6, 7 }), 0.25f);
-			Add("walkT", new List<int>(new int[] { 8, 9, 10, 11 }), 0.25f);
+			Add("walkB", new List<int>(new int[] { 0, 1, 2, 3 }), 0.20f);
+			Add("walkLR", new List<int>(new int[] { 4, 5, 6, 7 }), 0.20f);
+			Add("walkT", new List<int>(new int[] { 8, 9, 10, 11 }), 0.20f);
 			Play("walkB");
 			Origin = new Vector2f(8, 8);
 

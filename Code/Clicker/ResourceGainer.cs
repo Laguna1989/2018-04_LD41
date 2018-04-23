@@ -118,7 +118,7 @@ namespace JamTemplate
 			long cost = nextCost() * amount;
 			if (Resources.DecreaseMoney(cost))
 			{
-                totalBuildingsBuilt++;
+                totalBuildingsBuilt += amount;
 
                 this.amount += amount;
 				Console.WriteLine(string.Format("Added {0} of {1} at the price of {2}", amount, type, cost));
