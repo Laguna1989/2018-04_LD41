@@ -218,9 +218,13 @@ namespace JamTemplate
 			upgrades[3].text = "+Freeze Duration\nCost: " + Tower.ResearchManager.FreezeDurationCost + "R";
 			upgrades[4].text = "+Drop Chance\nCost: " + Tower.ResearchManager.GoldChanceCost + "R";
 
-			if (Resources.castleHealth < 10 && Resources.CheckMoney(1000))
+			if (Resources.castleHealth < 10)
 			{
-				upgrades[5].active = true;
+				if (Resources.CheckMoney(1000))
+					upgrades[5].active = true;
+				else
+					upgrades[5].active = false;
+
 				upgrades[5].text = "+Castle Health\nCost: 1000G";
 			}
 			else
