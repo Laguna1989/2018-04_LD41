@@ -31,12 +31,17 @@ namespace JamTemplate
         private float BuildingsBuilt = 0;
 
         private int NextAttackIncoming = 10;
+        private int OldAttackIncoming = 0;
 
         private float age = 0;
 
         private ParticleSystem coinParticles;
 
+        private HudBar hb;
+        bool animationPlaying = false;
+
         
+
 
         public override void Init()
         {
@@ -160,7 +165,13 @@ namespace JamTemplate
 					Add(upgrades[i - 1]);
 				}
 
-				#endregion
+                #endregion
+
+                hb = new HudBar(Coin.GetPosition() + new Vector2f(0, 300));
+                hb.bg1.FillColor = new Color(100, 100, 100);
+                hb.bg2.FillColor = new Color(30, 30, 30);
+                hb.fg.FillColor = new Color(158, 16, 0);
+                Add(hb);
 
 				fistINIT = true;
 			}
@@ -243,7 +254,10 @@ namespace JamTemplate
                 SmartText.DrawText("Invaders are gathering at the borders!",TextAlignment.MID, new Vector2f(400,300), new Color(158, 16, 0), rw);
 		}
 
-		bool animationPlaying = false;
+		
+
+
+
 		public override void Update(TimeObject to)
         {
 
@@ -280,19 +294,29 @@ namespace JamTemplate
                     animationPlaying = false;
                 }
 
-                T.TraceD(getValue().ToString());
-                T.TraceD(NextAttackIncoming.ToString());
+                //T.TraceD(getValue().ToString());
+                //T.TraceD(NextAttackIncoming.ToString());
 
+
+                double t = getValue() - OldAttackIncoming;
+                double d = NextAttackIncoming - OldAttackIncoming;
+                hb.health = (float)((t) / (d));
+
+                //T.Trace(t.ToString());
+                //T.Trace(d.ToString());
+                //T.Trace(hb.health.ToString());
+                //T.Trace("");
 
 
                 if (BuildingsBuilt < NextAttackIncoming && getValue() >= NextAttackIncoming)
                 {
 
 
-                    float incr =  4 + NextAttackIncoming * (0.25f);
-                    if (incr > 25) incr = 25;
+                    float incr =  6 + NextAttackIncoming * (0.2f);
+                    if (incr > 15) incr = 15;
+                    OldAttackIncoming = NextAttackIncoming;
                     NextAttackIncoming += (int)incr;
-                    
+                    T.Trace(incr.ToString());
 
                     Game.switchToTower();
                     
