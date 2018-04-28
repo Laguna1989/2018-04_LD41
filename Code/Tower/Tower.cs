@@ -17,9 +17,7 @@ namespace JamTemplate.Tower
 		private StateTower state;
 
 
-
-		public int level = 1;
-
+        
 		public int levelDamage = 1;
 		public int levelRange = 1;
 		public int levelRate = 1;
@@ -196,10 +194,11 @@ namespace JamTemplate.Tower
 
                 if (containsPoint(JamUtilities.Mouse.MousePositionInWorld))
 				{
-					state.CloseAllMenus();
-					showMenu = true;
-					T.TraceD("hit");
-					level++;
+                    if (state.CloseAllMenus())
+                    {
+                        showMenu = true;
+                        T.TraceD("hit");
+                    }
 				}
 			}
 
@@ -213,6 +212,11 @@ namespace JamTemplate.Tower
 			}
 		}
 
+
+        public bool overUpdate()
+        {
+            return (showMenu && (tbDamage.mode != 0 ||tbRange.mode != 0 ||tbRate.mode != 0));
+        }
 
 
 	}

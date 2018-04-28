@@ -265,13 +265,21 @@ namespace JamTemplate
 			Resources.Reset();
 		}
 
-		internal void CloseAllMenus()
-		{
-			foreach (Tower.Tower t in allTowers)
-			{
-				t.showMenu = false;
-			}
-		}
+        internal bool CloseAllMenus()
+        {
+            foreach (Tower.Tower t in allTowers)
+            {
+                if (t.overUpdate())
+                {
+                    return false;
+                }
+            }
+            foreach (Tower.Tower t in allTowers)
+            {
+                t.showMenu = false;
+            }
+            return true;
+        }
 
 		public void SpawnWave()
 		{
