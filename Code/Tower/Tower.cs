@@ -183,19 +183,22 @@ namespace JamTemplate.Tower
 
 		public override void GetInput()
 		{
-			if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Right))
+            
+
+            if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Right))
 			{
 				state.CloseAllMenus();
 			}
 			if (JamUtilities.Mouse.justPressed)
 			{
+                if (showMenu && tbDamage.mode == 0 && tbRange.mode == 0 && tbRate.mode == 0)
+                    state.CloseAllMenus();
 
-				if (containsPoint(JamUtilities.Mouse.MousePositionInWorld))
+                if (containsPoint(JamUtilities.Mouse.MousePositionInWorld))
 				{
 					state.CloseAllMenus();
 					showMenu = true;
 					T.TraceD("hit");
-					// todo nice level up menu?
 					level++;
 				}
 			}

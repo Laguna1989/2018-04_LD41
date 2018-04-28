@@ -15,7 +15,7 @@ namespace JamUtilities
         protected Sprite sprPressed;
         protected Color tc;
 
-        private int mode = 0;   // 0 normal, 1 over, 2 pressed
+        public int mode = 0;   // 0 normal, 1 over, 2 pressed
 
         public String text;
 
