@@ -20,6 +20,8 @@ namespace JamUtilities
         public String text;
 
         public bool active = true;
+        public bool visible = true;
+        public bool hasBeenVisible = true;
 
         public Action PressCallback = null;
 
@@ -67,6 +69,9 @@ namespace JamUtilities
 
 		public virtual void Draw(RenderWindow rw)
         {
+            if (!visible)
+                return;
+
             if (mode == 0)
                 rw.Draw(sprNormal);
             else if (mode == 1)
@@ -78,9 +83,9 @@ namespace JamUtilities
 
         public void GetInput()
         {
-            if (active)
+            mode = 0;
+            if (active && visible)
             {
-                mode = 0;
                 if (containsPoint(new Vector2f(Mouse.MousePositionInWindow.X, Mouse.MousePositionInWindow.Y)))
                 {
                     mode = 1;

@@ -181,15 +181,13 @@ namespace JamTemplate.Tower
 
 		public override void GetInput()
 		{
-            
-
             if (SFML.Window.Mouse.IsButtonPressed(SFML.Window.Mouse.Button.Right))
 			{
 				state.CloseAllMenus();
 			}
 			if (JamUtilities.Mouse.justPressed)
 			{
-                if (showMenu && tbDamage.mode == 0 && tbRange.mode == 0 && tbRate.mode == 0)
+                if (showMenu && !overUpdate())
                     state.CloseAllMenus();
 
                 if (containsPoint(JamUtilities.Mouse.MousePositionInWorld))
@@ -215,7 +213,7 @@ namespace JamTemplate.Tower
 
         public bool overUpdate()
         {
-            return (showMenu && (tbDamage.mode != 0 ||tbRange.mode != 0 ||tbRate.mode != 0));
+            return (showMenu && ((tbDamage.mode != 0 && tbDamage.active ) || (tbRange.mode != 0 && tbRange.active) ||(tbRate.mode != 0 && tbRate.active)));
         }
 
 

@@ -21,6 +21,7 @@ namespace JamUtilities
             for (int i = 0; i != count; ++i)
             {
                 SmartSprite s = new SmartSprite(TextureManager.GetTextureFromFileName(fileName), r);
+                s.Position = new Vector2f(-500, 0);
                 members.Add(s);
             }
         }

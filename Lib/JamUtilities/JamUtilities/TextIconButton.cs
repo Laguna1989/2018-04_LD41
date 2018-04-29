@@ -40,8 +40,11 @@ namespace JamUtilities
 
         public override void Draw(RenderWindow rw)
         {
-            base.Draw(rw);
-            rw.Draw(icon);
+            if (visible)
+            {
+                base.Draw(rw);
+                rw.Draw(icon);
+            }
         }
 
 

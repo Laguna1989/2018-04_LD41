@@ -115,8 +115,9 @@ namespace JamTemplate
 				{
 					resourceGainers[i - 1].SetPosition(new Vector2f(GP.WindowSize.X - rightWidth, (rightHeight / 7 ) * i - 15f));
 					resourceGainers[i - 1].SetTextOffset(resourceGainerTextOffset);
-
-					Add(resourceGainers[i - 1]);
+                    resourceGainers[i - 1].visible = false;
+                    resourceGainers[i - 1].hasBeenVisible = false;
+                    Add(resourceGainers[i - 1]);
 				}
 				#endregion
 
@@ -129,7 +130,7 @@ namespace JamTemplate
 				alchemy = new TextIconButton("Alchemy Lab", "../GFX/research-button_lastFrame.png", Resources.resourceGainers[ResourceGainer.Type.Alchemy_Lab].Add, leftButtonScale);
 				alchemy.SetPosition(new Vector2f(0, 65f));
 				alchemy.SetTextOffset(new Vector2f(50f, 0f));
-
+                alchemy.visible = alchemy.hasBeenVisible = false;
 				Add(alchemy);
 
 				#region Research Flask
@@ -161,6 +162,7 @@ namespace JamTemplate
 				{
 					upgrades[i - 1].SetPosition(new Vector2f(0,  16 +leftHeightCeiling + (leftHeight + 4) * (i - 1)));
 					upgrades[i - 1].SetTextOffset(leftTextOffset);
+                    upgrades[i - 1].visible = upgrades[i - 1].hasBeenVisible = false;
 
 					Add(upgrades[i - 1]);
 				}
@@ -207,6 +209,7 @@ namespace JamTemplate
 			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].nextCost() * Resources.amountSelected)) resourceGainers[5].active = true;
 			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].nextCost() * Resources.amountSelected)) resourceGainers[6].active = true;
 
+            
 			if (Resources.CheckResearch(Tower.ResearchManager.CritChanceCost)) upgrades[0].active = true;
 			if (Resources.CheckResearch(Tower.ResearchManager.CritFactorCost) && Tower.ResearchManager.CritChance > 0) upgrades[1].active = true;
 			if (Resources.CheckResearch(Tower.ResearchManager.FreezeChanceCost)) upgrades[2].active = true;
@@ -244,6 +247,22 @@ namespace JamTemplate
 				upgrades[5].text = "+Castle Health\nHEALTH FULL";
 			}
 
+            if (Resources.research != 0)
+            {
+                foreach (TextButton tb in upgrades)
+                {
+                    tb.visible = tb.hasBeenVisible = true;
+                }
+            }
+
+            if (!alchemy.hasBeenVisible)
+            {
+                if (Resources.money >= 0.7 * Resources.resourceGainers[ResourceGainer.Type.Alchemy_Lab].nextCost())
+                {
+                    alchemy.visible = alchemy.hasBeenVisible = true;
+                }
+            }
+
 			if (Resources.CheckMoney(Resources.resourceGainers[ResourceGainer.Type.Alchemy_Lab].nextCost())) alchemy.active = true;
 			else alchemy.active = false;
 
@@ -266,6 +285,44 @@ namespace JamTemplate
             {
                 age += to.ElapsedGameTime;
                 base.Update(to);
+
+                // update button visibility
+
+
+                resourceGainers[0].text = "Squire" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Squire].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Squire].nextCost() * Resources.amountSelected + "G";
+                resourceGainers[1].text = "Farmer" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Farmer].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Farmer].nextCost() * Resources.amountSelected + "G";
+                resourceGainers[2].text = "Knight" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Knight].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Knight].nextCost() * Resources.amountSelected + "G";
+                resourceGainers[3].text = "Feudal Lord" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Feudal_Lord].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Feudal_Lord].nextCost() + "G";
+                resourceGainers[4].text = "Church" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Church].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Church].nextCost() * Resources.amountSelected + "G";
+                resourceGainers[5].text = "Gold Mine" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Gold_Mine].nextCost() * Resources.amountSelected + "G";
+                resourceGainers[6].text = "Diamond Mine" + string.Format("[{0}]", Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].amount) + "\nCost: " + Resources.resourceGainers[ResourceGainer.Type.Diamond_Mine].nextCost() * Resources.amountSelected + "G";
+
+                for (int i = 0; i != resourceGainers.Count; ++i)
+                {
+                    ResourceGainer.Type rgt = ResourceGainer.Type.Squire;
+                    if (i == 1) rgt = ResourceGainer.Type.Farmer;
+                    else if (i == 2) rgt = ResourceGainer.Type.Knight;
+                    else if (i == 3) rgt = ResourceGainer.Type.Feudal_Lord;
+                    else if (i == 4) rgt = ResourceGainer.Type.Church;
+                    else if (i == 5) rgt = ResourceGainer.Type.Gold_Mine;
+                    else if (i == 6) rgt = ResourceGainer.Type.Diamond_Mine;
+
+                    TextButton rg = resourceGainers[i];
+                    if (rg.hasBeenVisible)
+                        continue;
+
+                    if (Resources.money >= 0.7 * Resources.resourceGainers[rgt].nextCost())
+                    {
+                        rg.visible = true;
+                        rg.hasBeenVisible = true;
+                    }
+                }
+
+                
+                for (int i = 0; i != upgrades.Count; ++i)
+                {
+                    
+                }
 
 #if DEBUG
                 if (Input.justPressed[Keyboard.Key.F9])
